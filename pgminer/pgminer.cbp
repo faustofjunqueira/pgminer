@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="pgminer" />
+		<Option makefile_is_custom="1" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<MakeCommands>
+			<Build command="$make -f $makefile $target" />
+			<CompileFile command="$make -f $makefile $file" />
+			<Clean command="$make -f $makefile Clean" />
+			<DistClean command="$make -f $makefile distclean$target" />
+			<AskRebuildNeeded command="$make -q -f $makefile $target" />
+			<SilentBuild command="$make -s -f $makefile $target" />
+		</MakeCommands>
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/libpgminer" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<MakeCommands>
+					<Build command="$make -f $makefile $target" />
+					<CompileFile command="$make -f $makefile $file" />
+					<Clean command="$make -f $makefile Clean" />
+					<DistClean command="$make -f $makefile distclean$target" />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -s -f $makefile $target" />
+				</MakeCommands>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/libpgminer" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+				<MakeCommands>
+					<Build command="$make -f $makefile $target" />
+					<CompileFile command="$make -f $makefile $file" />
+					<Clean command="$make -f $makefile Clean" />
+					<DistClean command="$make -f $makefile distclean$target" />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -s -f $makefile $target" />
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="../Util/pacutil/pacoteutilidadesql.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../Util/pgm_charptrbuf.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../Util/pgm_charptrbuf.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../Util/pgm_malloc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../Util/pgm_malloc.h" />
+		<Unit filename="../Util/pgm_matriz.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../Util/pgm_matriz.h" />
+		<Unit filename="../Util/pgm_matriz_util.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../Util/pgm_matriz_util.h" />
+		<Unit filename="../Util/pgm_string.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../Util/pgm_string.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../cublas/pgm_cublas.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../cublas/pgm_cublas.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="../cublas/pure_c_cublas.c">
+			<Option compilerVar="CC" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="../cublas/pure_c_cublas.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="../cublas/pure_c_cublas_v2.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../cublas/pure_c_cublas_v2.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../dfg_fc/dfg_fc.cpp">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../dfg_fc/dfg_fc.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../dfg_fc/dfg_fc_wrappers.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../dfg_fc/dfg_fc_wrappers.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../dfg_fc/dfg_utils.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../dfg_fc/pallocable.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../dfg_fc/topk.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../hash/pgm_hash.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../hash/pure_c_hash.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../hash/pure_c_hash.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../hash/uthash.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../libsvm/pgm_svm.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../libsvm/svm.cpp">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../libsvm/svm.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../libsvm/svm_predict.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../libsvm/svm_scale.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../libsvm/svm_train.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../libsvm/svm_train.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/doublefann.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/fann.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/fann_cascade.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/fann_error.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/fann_io.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/fann_train.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/fann_train_data.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/fixedfann.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/floatfann.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/include/compat_time.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/include/config.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/include/doublefann.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/include/fann.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/include/fann_cascade.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/include/fann_cpp.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/include/fann_data.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/include/fann_error.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/include/fann_internal.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/include/fann_io.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/include/fann_train.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/include/fixedfann.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/fann/include/floatfann.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/functions.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/functions.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/iris.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet_fann.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet_fann.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet_fann_parse.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet_fann_parse.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet_fann_train.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet_fann_train.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet_parse.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet_parse.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet_train_parameter.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet_train_parameter.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet_util.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/neuralnet_util.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/pgm_neuralnet.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../neuralnet/pgm_neuralnet.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_SVD/las2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../pgm_SVD/pgm_svd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../pgm_SVD/pure_c_svd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../pgm_SVD/pure_c_svd.h" />
+		<Unit filename="../pgm_SVD/svdlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../pgm_SVD/svdlib.h" />
+		<Unit filename="../pgm_SVD/svdutil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../pgm_SVD/svdutil.h" />
+		<Unit filename="../pgm_c45/average.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/besttree.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/build.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/buildex.i">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/classify.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/confmat.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/contin.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/defns.i">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/discr.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/extern.i">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/getdata.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/getnames.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/getopt.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/header.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/info.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/pgm_c45.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/prune.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/pure_c_c4.5.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/sort.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/st-thresh.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/stats.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/subset.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/trees.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/types.i">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_c45/xval-prep.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_kmeans/pgm_kmeans.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../pgm_kmeans/pure_c_kmeans.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../pgm_kmeans/pure_c_kmeans.h" />
+		<Unit filename="../pgm_lapack/pgm_lapack.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../pgm_lapack/pgm_lapack_util.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../pgm_lapack/pgm_lapack_util.h" />
+		<Unit filename="../pgm_math/pgm_math.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_math/pgm_math_util.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_math/pgm_math_util.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_som/pgm_som.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_som/pgm_som_util.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_som/pgm_som_util.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_tsvector/pgm_tsvector.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_tsvector/pgm_tsvector_util.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="../pgm_tsvector/pgm_tsvector_util.h">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="Makefile" />
+		<Unit filename="pgminer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

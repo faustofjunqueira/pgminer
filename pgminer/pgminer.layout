@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="../Util/pgm_matriz.c" open="0" top="0" tabpos="8">
+		<Cursor position="2386" topLine="47" />
+	</File>
+	<File name="../Util/pgm_matriz.h" open="0" top="0" tabpos="0">
+		<Cursor position="1943" topLine="57" />
+	</File>
+	<File name="../Util/pgm_matriz_util.c" open="0" top="0" tabpos="0">
+		<Cursor position="8641" topLine="296" />
+	</File>
+	<File name="../Util/pgm_matriz_util.h" open="0" top="0" tabpos="0">
+		<Cursor position="4555" topLine="146" />
+	</File>
+	<File name="../dfg_fc/dfg_fc.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="9911" topLine="276" />
+	</File>
+	<File name="../dfg_fc/dfg_utils.h" open="0" top="0" tabpos="9">
+		<Cursor position="1700" topLine="52" />
+	</File>
+	<File name="../hash/pure_c_hash.c" open="0" top="0" tabpos="0">
+		<Cursor position="20" topLine="0" />
+	</File>
+	<File name="../hash/pure_c_hash.h" open="0" top="0" tabpos="0">
+		<Cursor position="57" topLine="0" />
+	</File>
+	<File name="../hash/uthash.h" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="519" />
+	</File>
+	<File name="../libsvm/svm.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="57559" topLine="2802" />
+	</File>
+	<File name="../neuralnet/fann/doublefann.c" open="0" top="0" tabpos="1">
+		<Cursor position="1053" topLine="0" />
+	</File>
+	<File name="../neuralnet/fann/fann.c" open="0" top="0" tabpos="9">
+		<Cursor position="30596" topLine="933" />
+	</File>
+	<File name="../neuralnet/fann/fann_cascade.c" open="0" top="0" tabpos="5">
+		<Cursor position="7236" topLine="211" />
+	</File>
+	<File name="../neuralnet/fann/fann_io.c" open="0" top="0" tabpos="0">
+		<Cursor position="25797" topLine="753" />
+	</File>
+	<File name="../neuralnet/fann/fann_train.c" open="0" top="0" tabpos="6">
+		<Cursor position="1035" topLine="51" />
+	</File>
+	<File name="../neuralnet/fann/fann_train_data.c" open="0" top="0" tabpos="4">
+		<Cursor position="990" topLine="18" />
+	</File>
+	<File name="../neuralnet/fann/include/doublefann.h" open="0" top="0" tabpos="0">
+		<Cursor position="952" topLine="0" />
+	</File>
+	<File name="../neuralnet/fann/include/fann.h" open="0" top="0" tabpos="0">
+		<Cursor position="4089" topLine="27" />
+	</File>
+	<File name="../neuralnet/fann/include/fann_cascade.h" open="0" top="0" tabpos="0">
+		<Cursor position="17433" topLine="423" />
+	</File>
+	<File name="../neuralnet/fann/include/fann_cpp.h" open="0" top="0" tabpos="7">
+		<Cursor position="8246" topLine="150" />
+	</File>
+	<File name="../neuralnet/fann/include/fann_data.h" open="0" top="0" tabpos="8">
+		<Cursor position="4281" topLine="71" />
+	</File>
+	<File name="../neuralnet/fann/include/fann_internal.h" open="0" top="0" tabpos="12">
+		<Cursor position="5201" topLine="108" />
+	</File>
+	<File name="../neuralnet/fann/include/fann_train.h" open="0" top="0" tabpos="0">
+		<Cursor position="731" topLine="75" />
+	</File>
+	<File name="../neuralnet/functions.c" open="0" top="0" tabpos="5">
+		<Cursor position="1719" topLine="4" />
+	</File>
+	<File name="../neuralnet/functions.h" open="1" top="0" tabpos="5">
+		<Cursor position="633" topLine="7" />
+	</File>
+	<File name="../neuralnet/neuralnet.c" open="0" top="0" tabpos="0">
+		<Cursor position="592" topLine="14" />
+	</File>
+	<File name="../neuralnet/neuralnet.h" open="0" top="0" tabpos="0">
+		<Cursor position="1594" topLine="38" />
+	</File>
+	<File name="../neuralnet/neuralnet_fann.c" open="0" top="0" tabpos="3">
+		<Cursor position="1906" topLine="17" />
+	</File>
+	<File name="../neuralnet/neuralnet_fann.h" open="0" top="0" tabpos="0">
+		<Cursor position="181" topLine="0" />
+	</File>
+	<File name="../neuralnet/neuralnet_fann_parse.c" open="0" top="0" tabpos="3">
+		<Cursor position="4406" topLine="79" />
+	</File>
+	<File name="../neuralnet/neuralnet_fann_parse.h" open="0" top="0" tabpos="0">
+		<Cursor position="1529" topLine="5" />
+	</File>
+	<File name="../neuralnet/neuralnet_fann_train.c" open="1" top="0" tabpos="1">
+		<Cursor position="465" topLine="0" />
+	</File>
+	<File name="../neuralnet/neuralnet_fann_train.h" open="1" top="0" tabpos="6">
+		<Cursor position="527" topLine="0" />
+	</File>
+	<File name="../neuralnet/neuralnet_parse.c" open="0" top="0" tabpos="3">
+		<Cursor position="4463" topLine="100" />
+	</File>
+	<File name="../neuralnet/neuralnet_parse.h" open="0" top="0" tabpos="0">
+		<Cursor position="884" topLine="10" />
+	</File>
+	<File name="../neuralnet/neuralnet_train_parameter.c" open="1" top="0" tabpos="4">
+		<Cursor position="6271" topLine="132" />
+	</File>
+	<File name="../neuralnet/neuralnet_train_parameter.h" open="1" top="0" tabpos="3">
+		<Cursor position="1686" topLine="4" />
+	</File>
+	<File name="../neuralnet/neuralnet_util.c" open="0" top="0" tabpos="4">
+		<Cursor position="2361" topLine="30" />
+	</File>
+	<File name="../neuralnet/neuralnet_util.h" open="0" top="0" tabpos="0">
+		<Cursor position="719" topLine="0" />
+	</File>
+	<File name="../neuralnet/pgm_neuralnet.c" open="1" top="1" tabpos="2">
+		<Cursor position="14743" topLine="492" />
+	</File>
+	<File name="../neuralnet/pgm_neuralnet.h" open="0" top="0" tabpos="4">
+		<Cursor position="23" topLine="0" />
+	</File>
+	<File name="../pgm_kmeans/pgm_kmeans.c" open="0" top="0" tabpos="0">
+		<Cursor position="2198" topLine="39" />
+	</File>
+	<File name="../pgm_math/pgm_math.c" open="0" top="0" tabpos="10">
+		<Cursor position="3983" topLine="97" />
+	</File>
+	<File name="../pgm_math/pgm_math_util.c" open="0" top="0" tabpos="11">
+		<Cursor position="5663" topLine="123" />
+	</File>
+	<File name="Makefile" open="0" top="0" tabpos="0">
+		<Cursor position="6333" topLine="120" />
+	</File>
+	<File name="pgminer.c" open="0" top="0" tabpos="0">
+		<Cursor position="441" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>
