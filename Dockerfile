@@ -18,11 +18,5 @@ RUN apt-get install -y libblas-doc libblas-dev libblas-test libblas3gf liblapack
 ENV PGMINERDIR="/pgminer"
 ENV PGMINERMAKEDIR="/pgminer/pgminer"
 
-ADD src /pgminer
-
 #Add lapack lib
 ADD src/lapacke/ /usr/include/
-
-VOLUME /pgminer
-
-WORKDIR /pgminer/pgminer
