@@ -1,3 +1,0 @@
-Instalação no Fedora 23
-sudo dnf install postgresql postgresql-contrib postgresql-devel postgresql-libs
-
