@@ -13,7 +13,3 @@ install:
 
 destroy:
 	sudo docker rm -f $(CONTAINERNAME)
-
-copy:
-	sudo docker exec
-	sudo docker cp src $(CONTAINERNAME):/pgminer
