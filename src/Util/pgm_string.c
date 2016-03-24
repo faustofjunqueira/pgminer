@@ -11,6 +11,7 @@
 #include "tsearch/ts_type.h" //ts_vector
 
 #include "pgm_string.h"
+#include "pgm_types.h"
 #include "pgm_malloc.h"
 
 PGM_Vetor_String* pgm_create_vetor_string(int n_elem){
