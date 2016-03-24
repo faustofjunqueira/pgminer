@@ -6,7 +6,7 @@ SRC_FANN = ../fann/src
 INC_FANN = ../fann/src/include
 OBJ_PATH = obj
 NEURALNET = $(OBJ_PATH)/neuralnet.o $(OBJ_PATH)/neuralnet_util.o $(OBJ_PATH)/neuralnet_parse.o $(OBJ_PATH)/functions.o $(OBJ_PATH)/doublefann.o $(OBJ_PATH)/neuralnet_fann.o $(OBJ_PATH)/neuralnet_fann_parse.o $(OBJ_PATH)/neuralnet_fann_train.o $(OBJ_PATH)/pgm_neuralnet.o $(OBJ_PATH)/neuralnet_train_parameter.o
-OBJ = $(OBJ_PATH)/pgminer.o $(OBJ_PATH)/pure_c_kmeans.o $(OBJ_PATH)/pgm_charptrbuf.o $(OBJ_PATH)/pgm_matriz_util.o $(OBJ_PATH)/pgm_matriz.o $(OBJ_PATH)/pgm_kmeans.o $(OBJ_PATH)/pacoteutilidadesql.o $(OBJ_PATH)/las2.o $(OBJ_PATH)/pgm_svd.o $(OBJ_PATH)/pure_c_svd.o $(OBJ_PATH)/svdlib.o $(OBJ_PATH)/svdutil.o $(OBJ_PATH)/pgm_malloc.o $(OBJ_PATH)/pgm_lapack_util.o $(OBJ_PATH)/pgm_lapack.o $(OBJ_PATH)/pgm_math_util.o $(OBJ_PATH)/pgm_math.o $(OBJ_PATH)/pgm_tsvector.o $(OBJ_PATH)/pgm_tsvector_util.o $(OBJ_PATH)/pgm_string.o $(OBJ_PATH)/pure_c_hash.o $(OBJ_PATH)/pgm_hash.o $(OBJ_PATH)/svm.o $(OBJ_PATH)/svm_train.o $(OBJ_PATH)/svm_predict.o $(OBJ_PATH)/pgm_svm.o $(SOM) $(NEURALNET) $(OBJ_PATH)/pure_c_cublas.o $(OBJ_PATH)/pure_c_cublas_v2.o $(OBJ_PATH)/pgm_cublas.o
+OBJ = $(OBJ_PATH)/pgminer.o $(OBJ_PATH)/pure_c_kmeans.o $(OBJ_PATH)/pgm_charptrbuf.o $(OBJ_PATH)/pgm_matriz_util.o $(OBJ_PATH)/pgm_matriz.o $(OBJ_PATH)/pgm_kmeans.o $(OBJ_PATH)/pacoteutilidadesql.o $(OBJ_PATH)/las2.o $(OBJ_PATH)/pgm_svd.o $(OBJ_PATH)/pure_c_svd.o $(OBJ_PATH)/svdlib.o $(OBJ_PATH)/svdutil.o $(OBJ_PATH)/pgm_malloc.o $(OBJ_PATH)/pgm_lapack_util.o $(OBJ_PATH)/pgm_lapack.o $(OBJ_PATH)/pgm_math_util.o $(OBJ_PATH)/pgm_math.o $(OBJ_PATH)/pgm_tsvector.o $(OBJ_PATH)/pgm_tsvector_util.o $(OBJ_PATH)/pgm_string.o $(OBJ_PATH)/pure_c_hash.o $(OBJ_PATH)/pgm_hash.o $(OBJ_PATH)/svm.o $(OBJ_PATH)/svm_train.o $(OBJ_PATH)/svm_predict.o $(OBJ_PATH)/pgm_svm.o $(SOM) $(NEURALNET)
 LAPACK_INC = /usr/include/lapacke
 LAPACK_LIB = -llapack
 MORECFLAGS = -O3 -funroll-loops -fprefetch-loop-arrays -march=native -msse4
@@ -17,12 +17,12 @@ SOM = pgm_som_util.o pgm_som.o
 #DFG_FC
 #DFG_FC = dfg_fc.o dfg_fc_wrappers.o
 #    CUDA
-CUDA_PATH = /usr/local/cuda-5.0
-CUDA_LIB_PATH = $(CUDA_PATH)/lib64
-CUDA_LIB = -L$(CUDA_LIB_PATH) -lcudart -lcublas
-CUDA_INC_PATH = $(CUDA_PATH)/include
-CUDA_INC_FLAG = -I$(CUDA_INC_PATH) -I/usr/local/cuda-5.0/samples/common/inc/
-CUDA_CFLAGS = -g -O2 -fPIC -DLINUX_OOM_ADJ=0 -fPIC -DLINUX_OOM_ADJ=0 -Wall -Wpointer-arith -Wendif-labels -Wformat-security -fno-strict-aliasing -fwrapv -g -fpic
+#CUDA_PATH = /usr/local/cuda-5.0
+#CUDA_LIB_PATH = $(CUDA_PATH)/lib64
+#CUDA_LIB = -L$(CUDA_LIB_PATH) -lcudart -lcublas
+#CUDA_INC_PATH = $(CUDA_PATH)/include
+#CUDA_INC_FLAG = -I$(CUDA_INC_PATH) -I/usr/local/cuda-5.0/samples/common/inc/
+#CUDA_CFLAGS = -g -O2 -fPIC -DLINUX_OOM_ADJ=0 -fPIC -DLINUX_OOM_ADJ=0 -Wall -Wpointer-arith -Wendif-labels -Wformat-security -fno-strict-aliasing -fwrapv -g -fpic
 
 include $(PGXS)
 
@@ -37,7 +37,7 @@ deploy: pgminer.so
 	cp pgminer.so /usr/lib/postgresql/9.1/lib/
 
 pgminer.so: $(OBJ)
-	gcc -shared -o pgminer.so $(OBJ) $(LAPACK_LIB) -lm -g -lann $(CUDA_LIB)
+	gcc -shared -o pgminer.so $(OBJ) $(LAPACK_LIB) -lm -g
 
 $(OBJ_PATH)/pgm_matriz.o: ../Util/pgm_matriz.c
 	cc -o $@ -c ../Util/pgm_matriz.c $(MORECFLAGS) $(CFLAGS) -I$(INCLUDEDIR)
@@ -90,10 +90,10 @@ $(OBJ_PATH)/pgm_cublas.o: ../cublas/pgm_cublas.c
 	cc -o $@ -c ../cublas/pgm_cublas.c  $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
 $(OBJ_PATH)/pure_c_cublas.o: ../cublas/pure_c_cublas.c
-	g++ -o pure_c_cublas.o -c ../cublas/pure_c_cublas.c  $(CUDA_INC_FLAG) $(CUDA_CFLAGS)
+	g++ -o $@ -c ../cublas/pure_c_cublas.c  $(CUDA_INC_FLAG) $(CUDA_CFLAGS)
 
 $(OBJ_PATH)/pure_c_cublas_v2.o: ../cublas/pure_c_cublas_v2.c
-	g++ -o pure_c_cublas_v2.o -c ../cublas/pure_c_cublas_v2.c  $(CUDA_INC_FLAG) $(CUDA_CFLAGS)
+	g++ -o $@ -c ../cublas/pure_c_cublas_v2.c  $(CUDA_INC_FLAG) $(CUDA_CFLAGS)
 
 $(OBJ_PATH)/svm_train.o: ../libsvm/svm_train.c
 	cc -o $@ -c ../libsvm/svm_train.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
@@ -102,7 +102,7 @@ $(OBJ_PATH)/svm_predict.o: ../libsvm/svm_predict.c
 	cc -o $@ -c ../libsvm/svm_predict.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
 $(OBJ_PATH)/svm.o: ../libsvm/svm.cpp
-	g++ -o svm.o -c ../libsvm/svm.cpp $(INCLUDES) -I$(INCLUDEDIR) -Wall -Wconversion -O3 -fPIC
+	g++ -o $@ -c ../libsvm/svm.cpp $(INCLUDES) -I$(INCLUDEDIR) -Wall -Wconversion -O3 -fPIC
 
 $(OBJ_PATH)/pgm_svm.o: ../libsvm/pgm_svm.c
 	cc -o $@ -c ../libsvm/pgm_svm.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
