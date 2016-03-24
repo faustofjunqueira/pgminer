@@ -4,7 +4,7 @@ PGXS = $(shell $(PG_CONFIG) --pgxs)
 INCLUDEDIR = $(shell $(PG_CONFIG) --includedir-server)
 SRC_FANN = ../fann/src
 INC_FANN = ../fann/src/include
-OBJ_PATH = obj
+OBJ_PATH = ../bin/obj
 NEURALNET = $(OBJ_PATH)/neuralnet.o $(OBJ_PATH)/neuralnet_util.o $(OBJ_PATH)/neuralnet_parse.o $(OBJ_PATH)/functions.o $(OBJ_PATH)/doublefann.o $(OBJ_PATH)/neuralnet_fann.o $(OBJ_PATH)/neuralnet_fann_parse.o $(OBJ_PATH)/neuralnet_fann_train.o $(OBJ_PATH)/pgm_neuralnet.o $(OBJ_PATH)/neuralnet_train_parameter.o
 OBJ = $(OBJ_PATH)/pgminer.o $(OBJ_PATH)/pure_c_kmeans.o $(OBJ_PATH)/pgm_kmeans.o $(OBJ_PATH)/pgm_matriz_util.o $(OBJ_PATH)/pgm_matriz.o $(OBJ_PATH)/pgm_malloc.o
 LAPACK_INC = /usr/include/lapacke
@@ -29,15 +29,15 @@ include $(PGXS)
 all: pgminer.so
 
 Clear:
-	rm -rf *.o *.so obj/
-	mkdir -p obj
+	rm -rf ../bin
+	mkdir -p ../bin/obj
 
 deploy: all
 	rm -f /usr/lib/postgresql/$(VERSIONPG)/lib/pgminer.so
-	cp pgminer.so /usr/lib/postgresql/$(VERSIONPG)/lib/
+	cp ../bin/pgminer.so /usr/lib/postgresql/$(VERSIONPG)/lib/
 
 pgminer.so: $(OBJ)
-	gcc -shared -o pgminer.so $(OBJ) $(LAPACK_LIB) -lm -g
+	gcc -shared -o ../bin/pgminer.so $(OBJ) $(LAPACK_LIB) -lm -g
 
 $(OBJ_PATH)/pgm_matriz.o: ../Util/pgm_matriz.c
 	cc -o $@ -c ../Util/pgm_matriz.c $(MORECFLAGS) $(CFLAGS) -I$(INCLUDEDIR)
