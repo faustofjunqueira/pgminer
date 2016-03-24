@@ -15,6 +15,7 @@
 #include "../Util/pgm_malloc.h"
 #include "../Util/pgm_matriz.h"
 #include "../Util/pgm_matriz_util.h"
+#include "../Util/pgm_types.h"
 
 #include "neuralnet.h"
 #include "neuralnet_fann.h"
