@@ -13,6 +13,7 @@
 #include "../Util/pgm_string.h"
 #include "../Util/pgm_matriz.h"
 #include "../Util/pgm_matriz_util.h"
+#include "../Util/pgm_types.h"
 #include "pgm_tsvector_util.h"
 
 ArrayType *tsvector_words2arraytype(TSVector in){
