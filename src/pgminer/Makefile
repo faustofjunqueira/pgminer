@@ -32,9 +32,9 @@ Clear:
 	rm -rf *.o *.so obj/
 	mkdir -p obj
 
-deploy: pgminer.so
-	rm -f /usr/lib/postgresql/9.1/lib/pgminer.so
-	cp pgminer.so /usr/lib/postgresql/9.1/lib/
+deploy: Clear pgminer.so
+	rm -f /usr/lib/postgresql/$(VERSIONPG)/lib/pgminer.so
+	cp pgminer.so /usr/lib/postgresql/$(VERSIONPG)/lib/
 
 pgminer.so: $(OBJ)
 	gcc -shared -o pgminer.so $(OBJ) $(LAPACK_LIB) -lm -g
