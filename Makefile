@@ -19,6 +19,7 @@ destroy:
 
 deploy:
 	sudo docker exec $(CONTAINERNAME) make deploy
+	sudo docker restart $(CONTAINERNAME)
 
 %.o:
 	sudo docker exec $(CONTAINERNAME) make $@

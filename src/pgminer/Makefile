@@ -6,7 +6,7 @@ SRC_FANN = ../fann/src
 INC_FANN = ../fann/src/include
 OBJ_PATH = obj
 NEURALNET = $(OBJ_PATH)/neuralnet.o $(OBJ_PATH)/neuralnet_util.o $(OBJ_PATH)/neuralnet_parse.o $(OBJ_PATH)/functions.o $(OBJ_PATH)/doublefann.o $(OBJ_PATH)/neuralnet_fann.o $(OBJ_PATH)/neuralnet_fann_parse.o $(OBJ_PATH)/neuralnet_fann_train.o $(OBJ_PATH)/pgm_neuralnet.o $(OBJ_PATH)/neuralnet_train_parameter.o
-OBJ = $(OBJ_PATH)/pgminer.o $(OBJ_PATH)/pure_c_kmeans.o $(OBJ_PATH)/pgm_charptrbuf.o $(OBJ_PATH)/pgm_matriz_util.o $(OBJ_PATH)/pgm_matriz.o $(OBJ_PATH)/pgm_kmeans.o $(OBJ_PATH)/pacoteutilidadesql.o $(OBJ_PATH)/las2.o $(OBJ_PATH)/pgm_svd.o $(OBJ_PATH)/pure_c_svd.o $(OBJ_PATH)/svdlib.o $(OBJ_PATH)/svdutil.o $(OBJ_PATH)/pgm_malloc.o $(OBJ_PATH)/pgm_lapack_util.o $(OBJ_PATH)/pgm_lapack.o $(OBJ_PATH)/pgm_math_util.o $(OBJ_PATH)/pgm_math.o $(OBJ_PATH)/pgm_tsvector.o $(OBJ_PATH)/pgm_tsvector_util.o $(OBJ_PATH)/pgm_string.o $(OBJ_PATH)/pure_c_hash.o $(OBJ_PATH)/pgm_hash.o $(OBJ_PATH)/svm.o $(OBJ_PATH)/svm_train.o $(OBJ_PATH)/svm_predict.o $(OBJ_PATH)/pgm_svm.o $(SOM) $(NEURALNET)
+OBJ = $(OBJ_PATH)/pgminer.o $(OBJ_PATH)/pure_c_kmeans.o $(OBJ_PATH)/pgm_kmeans.o $(OBJ_PATH)/pgm_matriz_util.o $(OBJ_PATH)/pgm_matriz.o $(OBJ_PATH)/pgm_malloc.o
 LAPACK_INC = /usr/include/lapacke
 LAPACK_LIB = -llapack
 MORECFLAGS = -O3 -funroll-loops -fprefetch-loop-arrays -march=native -msse4

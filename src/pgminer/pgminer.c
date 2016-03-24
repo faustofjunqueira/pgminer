@@ -21,10 +21,10 @@ PG_MODULE_MAGIC;
 #endif
 
 
-PG_FUNCTION_INFO_V1(teste_hstore);
-Datum teste_hstore(PG_FUNCTION_ARGS);
+PG_FUNCTION_INFO_V1(pgm_hello_world);
+Datum pgm_hello_world(PG_FUNCTION_ARGS);
 
-Datum teste_hstore(PG_FUNCTION_ARGS){
+Datum pgm_hello_world(PG_FUNCTION_ARGS){
     char *t = PG_GETARG_CSTRING(0);
     PG_RETURN_CSTRING(t);
 }
