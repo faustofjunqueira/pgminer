@@ -6,7 +6,7 @@ SRC_FANN = ../fann/src
 INC_FANN = ../fann/src/include
 OBJ_PATH = obj
 NEURALNET = $(OBJ_PATH)/neuralnet.o $(OBJ_PATH)/neuralnet_util.o $(OBJ_PATH)/neuralnet_parse.o $(OBJ_PATH)/functions.o $(OBJ_PATH)/doublefann.o $(OBJ_PATH)/neuralnet_fann.o $(OBJ_PATH)/neuralnet_fann_parse.o $(OBJ_PATH)/neuralnet_fann_train.o $(OBJ_PATH)/pgm_neuralnet.o $(OBJ_PATH)/neuralnet_train_parameter.o
-OBJ = pgminer.o pure_c_kmeans.o pgm_charptrbuf.o pgm_matriz_util.o pgm_matriz.o pgm_kmeans.o pacoteutilidadesql.o las2.o pgm_svd.o pure_c_svd.o svdlib.o svdutil.o pgm_malloc.o pgm_lapack_util.o pgm_lapack.o pgm_math_util.o pgm_math.o  pgm_tsvector.o pgm_tsvector_util.o pgm_string.o pure_c_hash.o pgm_hash.o svm.o svm_train.o svm_predict.o pgm_svm.o $(SOM) $(NEURALNET) pure_c_cublas.o pure_c_cublas_v2.o pgm_cublas.o
+OBJ = $(OBJ_PATH)/pgminer.o $(OBJ_PATH)/pure_c_kmeans.o $(OBJ_PATH)/pgm_charptrbuf.o $(OBJ_PATH)/pgm_matriz_util.o $(OBJ_PATH)/pgm_matriz.o $(OBJ_PATH)/pgm_kmeans.o $(OBJ_PATH)/pacoteutilidadesql.o $(OBJ_PATH)/las2.o $(OBJ_PATH)/pgm_svd.o $(OBJ_PATH)/pure_c_svd.o $(OBJ_PATH)/svdlib.o $(OBJ_PATH)/svdutil.o $(OBJ_PATH)/pgm_malloc.o $(OBJ_PATH)/pgm_lapack_util.o $(OBJ_PATH)/pgm_lapack.o $(OBJ_PATH)/pgm_math_util.o $(OBJ_PATH)/pgm_math.o $(OBJ_PATH)/pgm_tsvector.o $(OBJ_PATH)/pgm_tsvector_util.o $(OBJ_PATH)/pgm_string.o $(OBJ_PATH)/pure_c_hash.o $(OBJ_PATH)/pgm_hash.o $(OBJ_PATH)/svm.o $(OBJ_PATH)/svm_train.o $(OBJ_PATH)/svm_predict.o $(OBJ_PATH)/pgm_svm.o $(SOM) $(NEURALNET) $(OBJ_PATH)/pure_c_cublas.o $(OBJ_PATH)/pure_c_cublas_v2.o $(OBJ_PATH)/pgm_cublas.o
 LAPACK_INC = /usr/include/lapacke
 LAPACK_LIB = -llapack
 MORECFLAGS = -O3 -funroll-loops -fprefetch-loop-arrays -march=native -msse4
@@ -26,104 +26,104 @@ CUDA_CFLAGS = -g -O2 -fPIC -DLINUX_OOM_ADJ=0 -fPIC -DLINUX_OOM_ADJ=0 -Wall -Wpoi
 
 include $(PGXS)
 
-Debug: pgminer.so
+all: pgminer.so
 
-Release: pgminer.so
-
-Clean:
+Clear:
 	rm -rf *.o *.so obj/
-	mkdir obj
+	mkdir -p obj
+
+deploy: pgminer.so
+	rm -f /usr/lib/postgresql/9.1/lib/pgminer.so
+	cp pgminer.so /usr/lib/postgresql/9.1/lib/
 
 pgminer.so: $(OBJ)
 	gcc -shared -o pgminer.so $(OBJ) $(LAPACK_LIB) -lm -g -lann $(CUDA_LIB)
-	#rm -f /usr/lib/postgresql/9.1/lib/pgminer.so
-	#cp pgminer.so /usr/lib/postgresql/9.1/lib/
 
-pgm_matriz.o: ../Util/pgm_matriz.c
-	cc -o pgm_matriz.o -c ../Util/pgm_matriz.c $(MORECFLAGS) $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/pgm_matriz.o: ../Util/pgm_matriz.c
+	cc -o $@ -c ../Util/pgm_matriz.c $(MORECFLAGS) $(CFLAGS) -I$(INCLUDEDIR)
 
-pgm_matriz_util.o: ../Util/pgm_matriz_util.c
-	cc -o pgm_matriz_util.o -c ../Util/pgm_matriz_util.c $(CFLAGS) -I$(INCLUDEDIR)
-pgm_malloc.o: ../Util/pgm_malloc.c
-	cc -o pgm_malloc.o -c ../Util/pgm_malloc.c $(CFLAGS) -I$(INCLUDEDIR) -fPIC
+$(OBJ_PATH)/pgm_matriz_util.o: ../Util/pgm_matriz_util.c
+	cc -o $@ -c ../Util/pgm_matriz_util.c $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/pgm_malloc.o: ../Util/pgm_malloc.c
+	cc -o $@ -c ../Util/pgm_malloc.c $(CFLAGS) -I$(INCLUDEDIR) -fPIC
 
-pacoteutilidadesql.o: ../Util/pacutil/pacoteutilidadesql.c
-	cc -o pacoteutilidadesql.o -c ../Util/pacutil/pacoteutilidadesql.c $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/pacoteutilidadesql.o: ../Util/pacutil/pacoteutilidadesql.c
+	cc -o $@ -c ../Util/pacutil/pacoteutilidadesql.c $(CFLAGS) -I$(INCLUDEDIR)
 
-pure_c_kmeans.o: ../pgm_kmeans/pure_c_kmeans.c
-	cc -o pure_c_kmeans.o -c ../pgm_kmeans/pure_c_kmeans.c $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/pure_c_kmeans.o: ../pgm_kmeans/pure_c_kmeans.c
+	cc -o $@ -c ../pgm_kmeans/pure_c_kmeans.c $(CFLAGS) -I$(INCLUDEDIR)
 
-pgm_kmeans.o: ../pgm_kmeans/pgm_kmeans.c
-	cc -o pgm_kmeans.o -c ../pgm_kmeans/pgm_kmeans.c $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/pgm_kmeans.o: ../pgm_kmeans/pgm_kmeans.c
+	cc -o $@ -c ../pgm_kmeans/pgm_kmeans.c $(CFLAGS) -I$(INCLUDEDIR)
 
-las2.o: ../pgm_SVD/las2.c
-	cc -o las2.o -c ../pgm_SVD/las2.c $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/las2.o: ../pgm_SVD/las2.c
+	cc -o $@ -c ../pgm_SVD/las2.c $(CFLAGS) -I$(INCLUDEDIR)
 
-pgm_svd.o: ../pgm_SVD/pgm_svd.c
-	cc -o pgm_svd.o -c ../pgm_SVD/pgm_svd.c $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/pgm_svd.o: ../pgm_SVD/pgm_svd.c
+	cc -o $@ -c ../pgm_SVD/pgm_svd.c $(CFLAGS) -I$(INCLUDEDIR)
 
-pure_c_svd.o: ../pgm_SVD/pure_c_svd.c
-	cc -o pure_c_svd.o -c ../pgm_SVD/pure_c_svd.c $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/pure_c_svd.o: ../pgm_SVD/pure_c_svd.c
+	cc -o $@ -c ../pgm_SVD/pure_c_svd.c $(CFLAGS) -I$(INCLUDEDIR)
 
-svdlib.o: ../pgm_SVD/svdlib.c
-	cc -o svdlib.o -c ../pgm_SVD/svdlib.c $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/svdlib.o: ../pgm_SVD/svdlib.c
+	cc -o $@ -c ../pgm_SVD/svdlib.c $(CFLAGS) -I$(INCLUDEDIR)
 
-svdutil.o: ../pgm_SVD/svdutil.c
-	cc -o svdutil.o -c ../pgm_SVD/svdutil.c $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/svdutil.o: ../pgm_SVD/svdutil.c
+	cc -o $@ -c ../pgm_SVD/svdutil.c $(CFLAGS) -I$(INCLUDEDIR)
 
-pgminer.o: pgminer.c
-	cc -o pgminer.o -c pgminer.c $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/pgminer.o: pgminer.c
+	cc -o $@ -c pgminer.c $(CFLAGS) -I$(INCLUDEDIR)
 
-pgm_lapack_util.o: ../pgm_lapack/pgm_lapack_util.c
-	cc -o pgm_lapack_util.o -c ../pgm_lapack/pgm_lapack_util.c $(CFLAGS) -I$(INCLUDEDIR) -I$(LAPACK_INC)
+$(OBJ_PATH)/pgm_lapack_util.o: ../pgm_lapack/pgm_lapack_util.c
+	cc -o $@ -c ../pgm_lapack/pgm_lapack_util.c $(CFLAGS) -I$(INCLUDEDIR) -I$(LAPACK_INC)
 
-pgm_lapack.o: ../pgm_lapack/pgm_lapack.c
-	cc -o pgm_lapack.o -c ../pgm_lapack/pgm_lapack.c $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/pgm_lapack.o: ../pgm_lapack/pgm_lapack.c
+	cc -o $@ -c ../pgm_lapack/pgm_lapack.c $(CFLAGS) -I$(INCLUDEDIR)
 
-pgm_math_util.o: ../pgm_math/pgm_math_util.c
-	cc -o pgm_math_util.o -c ../pgm_math/pgm_math_util.c $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/pgm_math_util.o: ../pgm_math/pgm_math_util.c
+	cc -o $@ -c ../pgm_math/pgm_math_util.c $(CFLAGS) -I$(INCLUDEDIR)
 
-pgm_math.o: ../pgm_math/pgm_math.c
-	cc -o pgm_math.o -c ../pgm_math/pgm_math.c $(CFLAGS) -I$(INCLUDEDIR)
+$(OBJ_PATH)/pgm_math.o: ../pgm_math/pgm_math.c
+	cc -o $@ -c ../pgm_math/pgm_math.c $(CFLAGS) -I$(INCLUDEDIR)
 
-pgm_cublas.o: ../cublas/pgm_cublas.c
-	cc -o pgm_cublas.o -c ../cublas/pgm_cublas.c  $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
+$(OBJ_PATH)/pgm_cublas.o: ../cublas/pgm_cublas.c
+	cc -o $@ -c ../cublas/pgm_cublas.c  $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
-pure_c_cublas.o: ../cublas/pure_c_cublas.c
+$(OBJ_PATH)/pure_c_cublas.o: ../cublas/pure_c_cublas.c
 	g++ -o pure_c_cublas.o -c ../cublas/pure_c_cublas.c  $(CUDA_INC_FLAG) $(CUDA_CFLAGS)
 
-pure_c_cublas_v2.o: ../cublas/pure_c_cublas_v2.c
+$(OBJ_PATH)/pure_c_cublas_v2.o: ../cublas/pure_c_cublas_v2.c
 	g++ -o pure_c_cublas_v2.o -c ../cublas/pure_c_cublas_v2.c  $(CUDA_INC_FLAG) $(CUDA_CFLAGS)
 
-svm_train.o: ../libsvm/svm_train.c
-	cc -o svm_train.o -c ../libsvm/svm_train.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
+$(OBJ_PATH)/svm_train.o: ../libsvm/svm_train.c
+	cc -o $@ -c ../libsvm/svm_train.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
-svm_predict.o: ../libsvm/svm_predict.c
-	cc -o svm_predict.o -c ../libsvm/svm_predict.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
+$(OBJ_PATH)/svm_predict.o: ../libsvm/svm_predict.c
+	cc -o $@ -c ../libsvm/svm_predict.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
-svm.o: ../libsvm/svm.cpp
+$(OBJ_PATH)/svm.o: ../libsvm/svm.cpp
 	g++ -o svm.o -c ../libsvm/svm.cpp $(INCLUDES) -I$(INCLUDEDIR) -Wall -Wconversion -O3 -fPIC
 
-pgm_svm.o: ../libsvm/pgm_svm.c
-	cc -o pgm_svm.o -c ../libsvm/pgm_svm.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
+$(OBJ_PATH)/pgm_svm.o: ../libsvm/pgm_svm.c
+	cc -o $@ -c ../libsvm/pgm_svm.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
-pgm_tsvector.o: ../pgm_tsvector/pgm_tsvector.c
-	cc -o pgm_tsvector.o -c ../pgm_tsvector/pgm_tsvector.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
+$(OBJ_PATH)/pgm_tsvector.o: ../pgm_tsvector/pgm_tsvector.c
+	cc -o $@ -c ../pgm_tsvector/pgm_tsvector.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
-pgm_tsvector_util.o: ../pgm_tsvector/pgm_tsvector_util.c
-	cc -o pgm_tsvector_util.o -c ../pgm_tsvector/pgm_tsvector_util.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
+$(OBJ_PATH)/pgm_tsvector_util.o: ../pgm_tsvector/pgm_tsvector_util.c
+	cc -o $@ -c ../pgm_tsvector/pgm_tsvector_util.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
-pgm_string.o: ../Util/pgm_string.c
-	cc -o pgm_string.o -c ../Util/pgm_string.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
+$(OBJ_PATH)/pgm_string.o: ../Util/pgm_string.c
+	cc -o $@ -c ../Util/pgm_string.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
-pgm_charptrbuf.o: ../Util/pgm_charptrbuf.c
-	cc -o pgm_charptrbuf.o -c ../Util/pgm_charptrbuf.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
+$(OBJ_PATH)/pgm_charptrbuf.o: ../Util/pgm_charptrbuf.c
+	cc -o $@ -c ../Util/pgm_charptrbuf.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
-pure_c_hash.o: ../hash/pure_c_hash.c
-	cc -o pure_c_hash.o -c ../hash/pure_c_hash.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
+$(OBJ_PATH)/pure_c_hash.o: ../hash/pure_c_hash.c
+	cc -o $@ -c ../hash/pure_c_hash.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
-pgm_hash.o: ../hash/pgm_hash.c
-	cc -o pgm_hash.o -c ../hash/pgm_hash.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
+$(OBJ_PATH)/pgm_hash.o: ../hash/pgm_hash.c
+	cc -o $@ -c ../hash/pgm_hash.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
 #INICIO NEURALNET
 

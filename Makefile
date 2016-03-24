@@ -5,7 +5,7 @@ all:
 	sudo docker exec $(CONTAINERNAME) make
 
 clean:
-	sudo docker exec $(CONTAINERNAME) make clean
+	sudo docker exec $(CONTAINERNAME) make Clear
 
 start:
 	sudo docker start $(CONTAINERNAME)
