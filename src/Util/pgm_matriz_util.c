@@ -14,6 +14,7 @@
 #include "access/heapam.h"  //Construção de Tupla
 #include "pgm_matriz.h"
 #include "pgm_matriz_util.h"
+#include "pgm_types.h"
 #include "pgm_malloc.h"
 #include <string.h>
 #include <assert.h>
