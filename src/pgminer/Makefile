@@ -32,7 +32,7 @@ Clear:
 	rm -rf *.o *.so obj/
 	mkdir -p obj
 
-deploy: Clear pgminer.so
+deploy: all
 	rm -f /usr/lib/postgresql/$(VERSIONPG)/lib/pgminer.so
 	cp pgminer.so /usr/lib/postgresql/$(VERSIONPG)/lib/
 
