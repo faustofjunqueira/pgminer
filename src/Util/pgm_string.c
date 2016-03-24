@@ -9,6 +9,7 @@
 #include "funcapi.h"        // trabalhar com row
 #include "access/heapam.h"  //Construção de Tupla
 #include "tsearch/ts_type.h" //ts_vector
+#include "access/htup_details.h" //Add heap_form_tuple
 
 #include "pgm_string.h"
 #include "pgm_types.h"

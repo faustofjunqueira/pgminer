@@ -8,6 +8,7 @@
 #include "utils/lsyscache.h"// construi array type
 #include "funcapi.h"        // trabalhar com row
 #include "access/heapam.h"  //Construção de Tupla
+#include "access/htup_details.h" //Add heap_form_tuple
 #include "tsearch/ts_type.h" //ts_vector
 
 #include "../Util/pgm_matriz.h"

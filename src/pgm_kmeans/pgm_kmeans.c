@@ -14,6 +14,7 @@
 #include "utils/lsyscache.h"// construi array type
 #include "funcapi.h"        // trabalhar com row
 #include "access/heapam.h"  //Construção de Tupla
+#include "access/htup_details.h" //Add heap_form_tuple
 
 #include "../Util/pgm_matriz.h"
 #include "../Util/pgm_matriz_util.h"
@@ -76,7 +77,6 @@ Datum pgm_kmeans(PG_FUNCTION_ARGS){
         tup_isnull = palloc0 ( tupdesc->natts * sizeof(bool));
 
         tupla = heap_form_tuple ( tupdesc ,  valor , tup_isnull );
-
         PG_RETURN_DATUM (HeapTupleGetDatum ( tupla ));
     }
 }

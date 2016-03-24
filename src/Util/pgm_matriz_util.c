@@ -12,6 +12,8 @@
 #include "utils/lsyscache.h"// construi array type
 #include "funcapi.h"        // trabalhar com row
 #include "access/heapam.h"  //Construção de Tupla
+ #include "access/htup_details.h" //Add heap_form_tuple
+ 
 #include "pgm_matriz.h"
 #include "pgm_matriz_util.h"
 #include "pgm_types.h"
