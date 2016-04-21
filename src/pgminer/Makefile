@@ -13,7 +13,7 @@ MORECFLAGS = -O3 -funroll-loops -fprefetch-loop-arrays -march=native -msse4
 #C45
 C45 = pgm_c45.o pure_c_c4.5.o besttree.o build.o info.o discr.o contin.o subset.o prune.o stats.o st-thresh.o classify.o confmat.o sort.o getnames.o getdata.o trees.o getopt.o header.o
 #SOM
-SOM = pgm_som_util.o pgm_som.o
+SOM = $(OBJ_PATH)/pgm_som_util.o $(OBJ_PATH)/pgm_som.o
 #DFG_FC
 #DFG_FC = dfg_fc.o dfg_fc_wrappers.o
 #    CUDA
@@ -206,11 +206,11 @@ header.o: createBinFolder ../pgm_c45/header.c
 
 #INICIO SOM
 
-pgm_som_util.o: createBinFolder ../pgm_som/pgm_som_util.c
-	cc -o pgm_som_util.o -c ../pgm_som/pgm_som_util.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
+$(OBJ_PATH)/pgm_som_util.o: createBinFolder ../pgm_som/pgm_som_util.c
+	cc -o $(OBJ_PATH)/pgm_som_util.o -c ../pgm_som/pgm_som_util.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
-pgm_som.o: createBinFolder
-	cc -o pgm_som.o -c ../pgm_som/pgm_som.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
+$(OBJ_PATH)/pgm_som.o: createBinFolder
+	cc -o $(OBJ_PATH)/pgm_som.o -c ../pgm_som/pgm_som.c $(INCLUDES) -I$(INCLUDEDIR) $(CFLAGS)
 
 #FIM SOM
 

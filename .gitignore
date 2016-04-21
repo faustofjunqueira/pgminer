@@ -1,3 +1,4 @@
-*.o
-*.so
+src/*.o
+src/*.so
 src/bin
+pgminer_*

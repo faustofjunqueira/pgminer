@@ -1,3 +1,4 @@
+DIST=BETA
 PORT=5431
 CONTAINERNAME=pgminer
 VERSION=9.4
@@ -20,6 +21,15 @@ destroy:
 deploy:
 	sudo docker exec $(CONTAINERNAME) make deploy
 	sudo docker restart $(CONTAINERNAME)
+
+dist: deploy
+	rm -f pgminer*.tar.gz
+	mkdir -p pgminer
+	cp src/bin/pgminer.so pgminer
+	cp -r src/lapacke/ pgminer
+	cp src/sql/extension.pgminer.sql pgminer
+	tar -zcvf pgminer_$(shell date +%s)_$(DIST).tar.gz pgminer/*
+	rm -rf pgminer
 
 %.o:
 	sudo docker exec $(CONTAINERNAME) make $@
