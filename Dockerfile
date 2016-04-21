@@ -2,7 +2,7 @@ FROM postgres:9.4
 MAINTAINER Fausto Junqueira <https://github.com/faustofjunqueira>
 
 #Config sourcelist to add libpq-dev
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > pgdg.list
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUN apt-get update
 
 #dev dependences
