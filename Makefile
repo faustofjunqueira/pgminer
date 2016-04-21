@@ -28,6 +28,8 @@ dist: deploy
 	cp src/bin/pgminer.so pgminer
 	cp -r src/lapacke/ pgminer
 	cp src/sql/extension.pgminer.sql pgminer
+	chmod +x install.sh
+	cp install.sh pgminer
 	tar -zcvf pgminer_$(shell date +%s)_$(DIST).tar.gz pgminer/*
 	rm -rf pgminer
 
