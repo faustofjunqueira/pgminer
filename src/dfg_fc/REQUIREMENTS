@@ -1,6 +1,0 @@
-Fedora:
-	yum install ann ann-devel ann-libs
-
-Ubuntu:
-	apt-get install libann-dev
-

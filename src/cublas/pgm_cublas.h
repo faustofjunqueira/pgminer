@@ -1,6 +1,0 @@
-#ifndef PGM_CUBLAS_H_INCLUDED
-#define PGM_CUBLAS_H_INCLUDED
-
-
-
-#endif // PGM_CUBLAS_H_INCLUDED
