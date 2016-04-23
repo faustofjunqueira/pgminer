@@ -1,0 +1,41 @@
+$main-view-color: #E0E0E0;
+
+.pgm-forkmegh{
+  position: absolute;
+  right: 0;
+  width: 110px;
+}
+
+.pgm-main-view {
+  height: 100vh;
+  background: linear-gradient($main-view-color, white);
+
+  .pgm-main-view-subtext{
+    margin: 35px 0 100px;
+  }
+
+  .jumbotron {  
+    background: transparent;
+  }
+
+  div.pgm-main-view-button{
+    margin: 0px 0px 45px;
+  }
+  a.pgm-main-view-button{
+    &:hover{
+      background: black;
+      color: white;
+    }
+    color: black;
+    font-size: 35px;
+    border: 1px solid;
+    border-radius: 20px 0px;
+  }
+
+  .pgm-main-view-logos{
+
+    img {
+      width: 235px;
+    }
+  }
+}

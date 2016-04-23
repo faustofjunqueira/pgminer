@@ -18,7 +18,7 @@ var header = require('gulp-header');
 var name = 'pgminer';
 var base = './src';
 var script = base + '/js/**.js';
-var styles = base + '/scss/**.scss';
+var styles = base + '/sass/**.scss';
 var htmls = base + '/html/**.html';
 
 var destJs = './js';

@@ -1,0 +1,35 @@
+@mixin pgm-logo-font-family(){
+  font-family: 'Racing Sans One', cursive;
+}
+
+.pgm-logo {
+
+  &::before{
+    content: 'pgminer';
+  }
+
+  &.pgm-logo-bg {
+    font-size: 90px;
+  }
+
+  &.pgm-logo-white {
+    color: white;
+  }
+
+  &.pgm-logo-full {
+    color: black;
+    text-shadow: 4px 0 0 white, -4px 0 0 white, 0 4px 0 white, 0 -4px 0 white, 1px 1px white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white;
+  }
+
+  &.pgm-logo-basic {
+    &:before {
+      content: 'pgm';
+    }
+  }
+
+  @include pgm-logo-font-family();
+}
+
+.pgm-logo-font {
+  @include pgm-logo-font-family();
+}
