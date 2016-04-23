@@ -13,6 +13,7 @@ var runSequence = require('run-sequence');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
+var header = require('gulp-header');
 
 var name = 'pgminer';
 var base = './src';
@@ -24,6 +25,8 @@ var destJs = './js';
 var destCss = './css';
 var destHtml = './';
 var destFonts = './fonts';
+
+var headertext = '\n/*!\nDate:'+ (new Date).toString() +'\nPgminer - Postgres Extension\n */\n';
 
 gulp.task('jshint', function () {
   return gulp.src(script)
@@ -42,6 +45,7 @@ gulp.task('uglify', function () {
         .pipe(concat('scripts.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write('./maps'))
+        .pipe(header(headertext))
     ])
     .pipe(concat(name+'.min.js'))
     .pipe(gulp.dest(destJs));
@@ -78,6 +82,6 @@ gulp.task('dist', function(){
   gulp.watch(htmls, ['htmlmin']);
 });
 
-gulp.task('default',function(){
-  return return runSequence('clean', ['jshint', 'uglify', 'htmlmin', 'css', 'fonts'], 'dist', cb);
+gulp.task('default',function(cb){
+  return runSequence(['jshint', 'uglify', 'htmlmin', 'css', 'fonts'], 'dist', cb);
 });
