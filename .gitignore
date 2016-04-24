@@ -1,5 +1,5 @@
 src/*.o
 src/*.so
 src/bin
-.idea
+.idea/*
 node_modules
