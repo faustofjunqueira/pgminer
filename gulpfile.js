@@ -1,25 +1,30 @@
+'use strict'
 /**
  * Created by fausto on 4/21/16.
  */
 
-var gulp = require('gulp');
-var jshint = require('gulp-jshint');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var es = require('event-stream');
-var htmlmin = require('gulp-htmlmin');
-var cleanCSS = require('gulp-clean-css');
-var runSequence = require('run-sequence');
-var rename = require('gulp-rename');
-var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
-var header = require('gulp-header');
+var gulp = require('gulp'),
+  jshint = require('gulp-jshint'),
+  concat = require('gulp-concat'),
+  uglify = require('gulp-uglify'),
+  es = require('event-stream'),
+  htmlmin = require('gulp-htmlmin'),
+  cleanCSS = require('gulp-clean-css'),
+  runSequence = require('run-sequence'),
+  rename = require('gulp-rename'),
+  sass = require('gulp-sass'),
+  sourcemaps = require('gulp-sourcemaps'),
+  header = require('gulp-header'),
+  fileinclude = require('gulp-file-include');
 
 var name = 'pgminer';
 var base = './src';
 var script = base + '/js/**.js';
 var styles = base + '/sass/**.scss';
-var htmls = base + '/html/**.html';
+var htmlBase = base + '/html';
+var htmls = htmlBase + '/*.html';
+var htmlPartial = htmlBase + '/partial';
+
 
 var destJs = './js';
 var destCss = './css';
@@ -53,6 +58,10 @@ gulp.task('uglify', function () {
 
 gulp.task('htmlmin', function () {
   return gulp.src(htmls)
+    .pipe(fileinclude({
+      prefix: '@@',
+      basepath: htmlPartial
+    }))
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest(destHtml))
 });
