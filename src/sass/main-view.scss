@@ -7,7 +7,7 @@ $main-view-color: #E0E0E0;
 }
 
 .pgm-main-view {
-  height: 100vh;
+  height: 95 vh;
   background: linear-gradient($main-view-color, white);
 
   .pgm-main-view-subtext{
@@ -16,6 +16,8 @@ $main-view-color: #E0E0E0;
 
   .jumbotron {  
     background: transparent;
+    padding-bottom: 0;
+    margin-bottom: 0;
   }
 
   div.pgm-main-view-button{
