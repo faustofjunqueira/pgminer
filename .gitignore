@@ -2,3 +2,4 @@ src/*.o
 src/*.so
 src/bin
 pgminer_*
+node_modules/
