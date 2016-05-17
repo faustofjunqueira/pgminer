@@ -5232,3 +5232,8 @@ CREATE OR REPLACE FUNCTION pgm_matrix_int2array(matrix bigint)
   COST 1;
 
 
+CREATE OR REPLACE FUNCTION pgm_som(data bigint, neuronios bigint,Dstart integer,iter_start integer, eta_start double precision,Dend integer, iter_end integer, eta_end float8, conscience boolean,out neuronios bigint, out cluster bigint )
+  RETURNS record AS
+'$libdir/pgminer.so', 'pgm_som'
+  LANGUAGE c VOLATILE STRICT
+  COST 1;
