@@ -14,7 +14,7 @@ RUN apt-get install libpq5 libpq-dev postgresql-server-dev-9.4 -y
 #lapack dependences
 RUN apt-get install -y libblas-doc libblas-dev libblas-test libblas3gf liblapack-pic liblapack-dev liblapack-doc liblapack-test liblapack3gf
 
-RUN apt-get install libann-dev
+RUN apt-get install libann-dev -y
 
 ENV PGMINERDIR="/pgminer"
 ENV PGMINERMAKEDIR="/pgminer/pgminer"
