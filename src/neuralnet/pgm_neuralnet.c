@@ -521,9 +521,9 @@ Datum pgm_train_neuralnet_bihiperbolic(PG_FUNCTION_ARGS);
 
 Datum pgm_train_neuralnet_bihiperbolic(PG_FUNCTION_ARGS){
 	struct fann_train_data *data;
-	PGM_Vetor_Int     *hidden    = pgm_ArrayType2PGM_Vetor_Int(PG_GETARG_ARRAYTYPE_P(1));
-	double steepness =  PG_GETARG_FLOAT8(3);
-	int max_epochs =  PG_GETARG_INT64(5);
+	PGM_Vetor_Int *hidden = pgm_ArrayType2PGM_Vetor_Int(PG_GETARG_ARRAYTYPE_P(1));
+	double steepness = PG_GETARG_FLOAT8(3);
+	int max_epochs = PG_GETARG_INT64(5);
 	int epochs_between_reports = PG_GETARG_INT64(6);
 	double desired_error = PG_GETARG_FLOAT8(7);
     double lam = PG_GETARG_FLOAT8(2);

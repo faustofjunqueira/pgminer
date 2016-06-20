@@ -27,31 +27,51 @@
 #define STEEPNESS_BIHIPERBOLIC_DEFAULT 0.5
 
 typedef struct {
-	int size; // tamanho de byte da struct
-	unsigned short NLayers, // numero de camadas
-	               FunctionActivation;
-	unsigned int NNeurons[MAX_LAYERS], // numero de neuronios por camada
-	             TotalNeurons,
-	             TotalWeights,
-	             Bias;
-    double BihiperbolicLambda, BihiperbolicT1,BihiperbolicT2;
-	double InputMin;
-	double InputMax;
-	double OutputMin;
-	double OutputMax;
-	double Steepness;
-	double MSE;
-	unsigned int WeightsPos[MAX_LAYERS - 1];// posição que começa cada camada
-	double Weights[0]; // Vetor que guarda os valores dos neuronios e os pesos. Para acessar os pesos basta da um GetWeght(layer)
-	/*
-	Pesos:
-		primeira camada
-			- Bias[layer][i] - Neuron[layer+1][i]
-			- Neuron[layer][j] - Neuron[layer+1][i]
-			- Neuron[layer][j+1] - Neuron[layer+1][i]
-			assim sucessivamente
-			Lembrando que a ultima camada nao tem Bias
-	*/
+  // tamanho de byte da struct
+  int size; 
+
+  // numero de camadas
+  unsigned short NLayers;
+  
+  // codigo da função de ativação
+  unsigned short FunctionActivation; 
+
+  // numero de neuronios por camada
+  unsigned int NNeurons[MAX_LAYERS];
+  
+  // numero total de neurônios presentes na ANN
+  unsigned int TotalNeurons;
+
+  // Número total de pesos da rede neural
+  unsigned int TotalWeights;
+
+  //Utilizado na conversão para FANN
+  unsigned int Bias;
+  double Steepness;
+  double MSE;
+
+  // Quando escolhido a função bihperbólica como função de ativação, esses parametros precisam estar preenchido
+  double BihiperbolicLambda, BihiperbolicT1,BihiperbolicT2;
+
+  // Input (Max e Min), valores maximos e mínimos da entrada para efeitos de normalização
+  double InputMin, InputMax;
+  // Output (Max e Min), valores maximos e mínimos da saída para efeitos de normalização
+  double OutputMin, OutputMax;
+
+  //Vetor com o indice que inicia a sequencia de pesos da camada no vetor Weights
+  unsigned int WeightsPos[MAX_LAYERS - 1];
+
+  // Vetor que guarda os valores dos neuronios e os pesos. Para acessar os pesos basta da um GetWeght(layer)
+  double Weights[0];
+  /*
+  Pesos:
+    primeira camada
+      - Bias[layer][i] - Neuron[layer+1][i]
+      - Neuron[layer][j] - Neuron[layer+1][i]
+      - Neuron[layer][j+1] - Neuron[layer+1][i]
+      assim sucessivamente
+      Lembrando que a ultima camada nao tem Bias
+  */
 }NeuralNet;
 
 /*

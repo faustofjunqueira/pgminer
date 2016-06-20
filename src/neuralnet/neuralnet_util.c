@@ -122,19 +122,23 @@ void nn_NeuralNetRun( NeuralNet *NN,  PGM_Vetor_Double *Out, double *In, double 
 
 	int layer, neuron_it,neuron_next;
 
-	if(NN->InputMin != 0 || NN->InputMax != 1)
-		for(neuron_it = 0; neuron_it < NN->NNeurons[0]; neuron_it++)
+	// Normalizando a entrada
+	if(NN->InputMin != 0 || NN->InputMax != 1){
+		for(neuron_it = 0; neuron_it < NN->NNeurons[0]; neuron_it++){
 			In[neuron_it] = nn_norm(NN->InputMin,NN->InputMax,In[neuron_it]);
+		}
+	}
+	
 	for(layer = 0; layer < NN->NLayers-1; layer++){
-
 		memset(Work,0,sizeof(double)*NN->NNeurons[layer+1]); // Limpando o vetor
-
+		
 		for(neuron_next = 0; neuron_next < NN->NNeurons[layer+1]; neuron_next++){
-
-			for(neuron_it = 0; neuron_it < NN->NNeurons[layer]; neuron_it++)
+			
+			for(neuron_it = 0; neuron_it < NN->NNeurons[layer]; neuron_it++){
 				Work[neuron_next] += In[neuron_it]* nn_GetWeight(NN,layer,neuron_it,neuron_next);
-			Work[neuron_next] += NN->Bias * nn_GetBiasWeight(NN,layer,neuron_next);
+			}
 
+			Work[neuron_next] += NN->Bias * nn_GetBiasWeight(NN,layer,neuron_next);
 			nn_activation_switch(NN->FunctionActivation, Work[neuron_next],Work[neuron_next]);
 		}
 
@@ -147,9 +151,11 @@ void nn_NeuralNetRun( NeuralNet *NN,  PGM_Vetor_Double *Out, double *In, double 
 	Out->n_elems = NN->NNeurons[NN->NLayers-1];
 	Out->valor = In; // se analisar bem vera que o valor final terminou no In
 
-	if(NN->OutputMin != 0 || NN->OutputMax != 1)
-		for(neuron_it = 0; neuron_it < NN->NNeurons[NN->NLayers-1]; neuron_it++)
+	if(NN->OutputMin != 0 || NN->OutputMax != 1){
+		for(neuron_it = 0; neuron_it < NN->NNeurons[NN->NLayers-1]; neuron_it++){
 			Out->valor[neuron_it] = nn_denorm(NN->OutputMin,NN->OutputMax,Out->valor[neuron_it]);
+		}
+	}
 
 }
 

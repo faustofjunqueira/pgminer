@@ -3145,10 +3145,9 @@ CREATE FUNCTION pgm_nn_fann_train(train_data bigint, ann bigint, max_epochs inte
 -- Name: pgm_nn_fann_train(bigint, integer[], integer, integer, double precision); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION pgm_nn_fann_train(train_data bigint, layers integer[], max_epochs integer, epochs_between_reports integer, desired_error double precision) RETURNS bigint
+CREATE FUNCTION pgm_nn_fann_train(train_data bigint, hidden_layer integer[], functionActivation integer, steepness double precision, max_epochs integer, epochs_between_reports integer, desired_error double precision) RETURNS bigint
     LANGUAGE c STRICT
     AS '$libdir/pgminer.so', 'pgm_train_neuralnet1';
-
 
 --
 -- TOC entry 396 (class 1255 OID 28167)

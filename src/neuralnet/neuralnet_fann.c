@@ -25,15 +25,21 @@ NeuralNet *nn_fann_Fann2NeuralNet(struct fann *ANN ){
 	fann_get_layer_array(ANN,ANN_NNeurons);
 
 	ANN_Weights = nn_fann_parse_get_weights(ANN,ANN_NLayers,ANN_NNeurons);
-
-	NN = nn_NeuralNetCreate(ANN_NLayers,
-	                          ANN->first_layer->first_neuron->activation_function,// Na FANN, cada Neuronio tem uma função de ativação. A neuralnet usa somente a função de ativação do primeiro neuronio
-                              ANN->BiperbolicLambda,ANN->BiperbolicT1,ANN->BiperbolicT2,
-                              ANN_NNeurons,
-                              ANN->input_min,ANN->input_max,ANN->output_min,ANN->output_max,
-                              ANN->first_layer->first_neuron->activation_steepness,// Na FANN, cada Neuronio tem um steepness de ativação. A neuralnet usa somente o steepness de ativação do primeiro neuronio
-                              BiasArray[0], // A FANN tem um bias para cada camada da rede, na NeuralNet eh usado somente o bias da primeira camada
-                              ANN_Weights);
+  NN = nn_NeuralNetCreate(
+    ANN_NLayers,
+    // Na FANN, cada Neuronio tem uma função de ativação. A neuralnet usa somente a função de ativação do primeiro neuronio, 
+    // porem a primeira camada da FANN nao tem função de ativação, logo pegamos da camada seguinte
+    (ANN->first_layer+1)->first_neuron->activation_function,
+    ANN->BiperbolicLambda,ANN->BiperbolicT1,ANN->BiperbolicT2,
+    ANN_NNeurons,
+    ANN->input_min,ANN->input_max,ANN->output_min,ANN->output_max,
+    // Na FANN, cada Neuronio tem um steepness de ativação. A neuralnet usa somente o steepness de ativação do primeiro neuronio, 
+    // porem a primeira camada da FANN nao tem stepness, logo pegamos da camada seguinte
+    (ANN->first_layer+1)->first_neuron->activation_steepness,
+    // A FANN tem um bias para cada camada da rede, na NeuralNet eh usado somente o bias da primeira camada
+    BiasArray[0], 
+    ANN_Weights
+  );
 	NN->MSE = fann_get_MSE(ANN);
 
 	return NN;

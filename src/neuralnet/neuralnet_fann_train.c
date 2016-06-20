@@ -43,11 +43,6 @@ struct fann *nn_fann_train_create_standard_array(PGM_Vetor_Int *layers, double s
   fann_set_activation_steepness_hidden(ANN,steepness);
   fann_set_activation_steepness_output(ANN,steepness);
 
-  //fann_set_training_algorithm( ANN, FANN_TRAIN_QUICKPROP );
-  //fann_set_training_algorithm( ANN, FANN_TRAIN_INCREMENTAL );
-  // fann_set_learning_rate( ANN, 0.05 );
-  //fann_set_learning_momentum( ANN, 0.05 );
-
   return ANN;
 }
 //=================================== FIM FUNÇÕES INTERNAS ==============================================
@@ -62,9 +57,7 @@ struct fann_train_data* nn_fann_train_create_fann_train_data( PGM_Matriz_Double 
   int i;
 
   if( input->n_linhas != output->n_linhas ){
-    //elog(ERROR, "Erro no numero de linha da entrada e saida ( %d - %d)",  input->n_linhas, output->n_linhas);
-    printf("Erro no numero de linha da entrada e saida ( %d - %d)",  input->n_linhas, output->n_linhas);
-    exit(-1);
+    elog(ERROR, "Erro no numero de linha da entrada e saida ( %d - %d)",  input->n_linhas, output->n_linhas);
   }
 
   data->num_data = input->n_linhas;
@@ -88,11 +81,10 @@ struct fann_train_data* nn_fann_train_create_fann_train_data( PGM_Matriz_Double 
 struct fann *nn_fann_train1(struct fann_train_data *data, PGM_Vetor_Int *hidden, int functionActivation,
                           double steepness,int max_epochs,int epochs_between_reports,double desired_error){
 
-  MemoryContext contextoAnterior = MemoryContextSwitchTo( CurTransactionContext );
   struct fann *ANN;
+  MemoryContext contextoAnterior = MemoryContextSwitchTo( CurTransactionContext );
 
   if (hidden->n_elems > 3){
-
     elog (ERROR, "O numero maximo de camadas escondidas é 3 (%d)", hidden->n_elems);
   }
 
