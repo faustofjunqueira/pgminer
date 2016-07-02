@@ -41,7 +41,7 @@ PG_FUNCTION_INFO_V1(pgm_nn_evaluate);
 Datum pgm_nn_evaluate(PG_FUNCTION_ARGS);
 
 Datum pgm_nn_evaluate(PG_FUNCTION_ARGS){
-	NeuralNet *NN;
+    NeuralNet *NN;
 	ArrayType *Array = PG_GETARG_ARRAYTYPE_P(1);
 	PGM_Vetor_Double Out;
 	double *In, *Work;
@@ -52,17 +52,16 @@ Datum pgm_nn_evaluate(PG_FUNCTION_ARGS){
     NeuronsMaxLayer = nn_MaxLayer(NN);
 
 	if(ARR_ELEMTYPE(PG_GETARG_ARRAYTYPE_P(1)) != FLOAT8OID)
-			elog(ERROR, "O array deve ser contituido por float8 (double precision)");
+		elog(ERROR, "O array deve ser contituido por float8 (double precision)");
 
 	ArrayElem = ArrayGetNItems( ARR_NDIM(Array) ,ARR_DIMS(Array) );
 
 	if (NN->NNeurons[0] != ArrayElem)
-			elog(ERROR, "Numero do array de float é %d e nao corresponde com a primeira camada da neuralnet que é de %d", ArrayElem, NN->NNeurons[0]);
+		elog(ERROR, "Numero do array de float é %d e nao corresponde com a primeira camada da neuralnet que é de %d", ArrayElem, NN->NNeurons[0]);
 
 	In = (double*) pgm_malloc (sizeof(double)*(NeuronsMaxLayer+1));
 	Work = (double*) pgm_malloc (sizeof(double)*(NeuronsMaxLayer+1));
-
-	memcpy(In,ARR_DATA_PTR (Array), sizeof(double)*ArrayElem);
+    memcpy(In,ARR_DATA_PTR (Array), sizeof(double)*ArrayElem);    
 
     nn_NeuralNetRun(NN, &Out,In,Work);
 
@@ -551,6 +550,13 @@ Datum pgm_fann_test(PG_FUNCTION_ARGS){
 	MemoryContextSwitchTo( contextoAnterior );
 
 	PG_RETURN_FLOAT8(fann_get_MSE(ann));
+}
+
+PG_FUNCTION_INFO_V1(pgm_nn_fann_get_mse_report);
+Datum pgm_nn_fann_get_mse_report(PG_FUNCTION_ARGS);
+
+Datum pgm_nn_fann_get_mse_report(PG_FUNCTION_ARGS){
+    PG_RETURN_FLOAT8(fann_get_MSE((struct fann *) PG_GETARG_POINTER(0)));
 }
 
 PG_FUNCTION_INFO_V1(pgm_fann_run);

@@ -129,8 +129,6 @@ unsigned short nn_parse_ReadFunctionActivation(char **st, double *bhLambida, dou
             }else if(sscanf(*st,"%lf",bhT2) != 1)
                 nn_parse_NeuralNetParseError("Não foi possivel ler o valor de lambda",pt);
         }
-
-        elog(INFO,"\n+-----------------------------\n+ %lf %lf %lf\n+-----------------------------\n",*bhLambida,*bhT1,*bhT2);
 		return function_activation;
 	}
 }

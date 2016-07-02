@@ -866,54 +866,13 @@ BEGIN
 END;
 $$;
 
-
---
--- TOC entry 303 (class 1255 OID 28067)
--- Dependencies: 8 862 1097
--- Name: create_nn(text, integer[], integer, integer); Type: FUNCTION; Schema: public; Owner: -
---
-
-CREATE FUNCTION create_nn(table_data text, layers integer[], validation_fold integer DEFAULT 1, test_fold integer DEFAULT 1, OUT nn neuralnet, OUT mse_report double precision[]) RETURNS record
-    LANGUAGE plpgsql STABLE COST 1000
-    AS $$
--- table_data deve ser uma tabela preparada por prepare_data_to_learn, tendo as colunas id, fold, entrada, saida, com entrada e saida normalizadas.
-DECLARE
-  FANN bigint;
-  trainData bigint;
-  validationData bigint;
-  testData bigint;
-BEGIN
-  trainData := pgm_nn_fann_create_train_data( 
-                (make_matrix( 'select id, entrada valor from ' || table_data || ' where not (fold in (' || validation_fold || ', ' || test_fold || ' ))' )).matrix,
-                (make_matrix( 'select id, saida valor from ' || table_data || ' where not (fold in (' || validation_fold || ', ' || test_fold || ' ))' )).matrix );
-  
-  validationData := pgm_nn_fann_create_train_data(
-                      (make_matrix( 'select id, entrada valor from ' || table_data || ' where fold in (' || validation_fold || ') ' )).matrix,
-                      (make_matrix( 'select id, saida valor from ' || table_data || ' where fold in (' || validation_fold || ') ' )).matrix );
-
-  testData := pgm_nn_fann_create_train_data(
-                (make_matrix( 'select id, entrada valor from ' || table_data || ' where fold in (' || test_fold || ') ' )).matrix,
-                (make_matrix( 'select id, saida valor from ' || table_data || ' where fold in (' || test_fold || ') ' )).matrix );
-
-  FANN := pgm_nn_fann_train( trainData, layers, 500, 10, 0.00001 );
-  mse_report := pgm_nn_fann_get_mse_report( FANN );
-
-  NN := pgm_nn_fann2neuralnet( FANN );
-
-  PERFORM pgm_nn_fann_free_train_data( testData );
-  PERFORM pgm_nn_fann_free_train_data( validationData );
-  PERFORM pgm_nn_fann_free_train_data( trainData );
-END;
-$$;
-
-
 --
 -- TOC entry 304 (class 1255 OID 28068)
 -- Dependencies: 862 1097 8
 -- Name: create_nn(text, integer[], integer, integer, integer, integer); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION create_nn(table_data text, layers integer[], validation_fold integer, test_fold integer, max_epochs integer, epochs_between_report integer, OUT nn neuralnet, OUT mse_report double precision[]) RETURNS record
+CREATE FUNCTION create_nn(table_data text, hidden integer[], functionActivation integer DEFAULT 3, steepness float default 0.01, validation_fold integer default 1, test_fold integer default 1, max_epochs integer default 500, epochs_between_report integer default 10, OUT nn neuralnet, OUT mse_report double precision[]) RETURNS record
     LANGUAGE plpgsql STABLE COST 1000
     AS $$
 -- table_data deve ser uma tabela preparada por prepare_data_to_learn, tendo as colunas id, fold, entrada, saida, com entrada e saida normalizadas.
@@ -935,7 +894,7 @@ BEGIN
                 (make_matrix( 'select id, entrada valor from ' || table_data || ' where fold = ' || test_fold || ' ' )).matrix,
                 (make_matrix( 'select id, saida valor from ' || table_data || ' where fold = ' || test_fold || ' ' )).matrix );
 
-  FANN := pgm_nn_fann_train( trainData, layers, max_epochs, epochs_between_report, 0.00001 );
+  FANN := pgm_nn_fann_train( trainData, hidden, functionActivation, steepness, max_epochs, epochs_between_report, 0.00001 );
 
   PERFORM pgm_nn_fann_train( trainData, FANN, max_epochs, epochs_between_report, 0.00001 );
 
@@ -950,7 +909,7 @@ BEGIN
   PERFORM pgm_nn_fann_free_train_data( trainData );
 END;
 $$;
-
+  
 
 --
 -- TOC entry 305 (class 1255 OID 28069)
@@ -3037,6 +2996,9 @@ CREATE FUNCTION pgm_nn_equal(nn1 neuralnet, nn2 neuralnet) RETURNS boolean
     LANGUAGE c IMMUTABLE STRICT
     AS '$libdir/pgminer.so', 'pgm_nn_equal';
 
+CREATE FUNCTION pgm_nn_fann_get_mse_report(fann bigint) RETURNS double precision
+    LANGUAGE c IMMUTABLE STRICT
+    AS '$libdir/pgminer.so', 'pgm_nn_fann_get_mse_report';
 
 --
 -- TOC entry 386 (class 1255 OID 28157)

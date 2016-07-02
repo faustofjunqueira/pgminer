@@ -13,9 +13,8 @@
 
 NeuralNet *nn_Cstring2NeuralNet(char* st){
 
-    NeuralNet *nn;
-	unsigned short n_layers = 0,
-	               function_activation;
+  NeuralNet *nn;
+	unsigned short n_layers = 0, function_activation;
 
 	unsigned int *neurons,
 	             n_weights = 0,
@@ -23,13 +22,12 @@ NeuralNet *nn_Cstring2NeuralNet(char* st){
 	             TotalNeurons = 0;
 	//Scaling Escalas Default
 	double input_min = INPUT_MIN_DEFAULT_VALUE,
-	 	   input_max = INPUT_MAX_DEFAULT_VALUE,
-	 	   output_min = OUTPUT_MIN_DEFAULT_VALUE,
-	 	   output_max = OUTPUT_MAX_DEFAULT_VALUE,
-
-	       steepness = STEEPNESS_DEFAULT_VALUE,
-           bhLambda,bhT1,bhT2,
-	       *weights;
+		input_max = INPUT_MAX_DEFAULT_VALUE,
+		output_min = OUTPUT_MIN_DEFAULT_VALUE,
+		output_max = OUTPUT_MAX_DEFAULT_VALUE,
+		steepness = STEEPNESS_DEFAULT_VALUE,
+		bhLambda,bhT1,bhT2,
+		*weights;
 
 	nn_parse_NeuralNetInitParseError(st);
 
@@ -130,17 +128,18 @@ void nn_NeuralNetRun( NeuralNet *NN,  PGM_Vetor_Double *Out, double *In, double 
 	}
 	
 	for(layer = 0; layer < NN->NLayers-1; layer++){
+		elog(INFO, "Camanda %d", layer);
 		memset(Work,0,sizeof(double)*NN->NNeurons[layer+1]); // Limpando o vetor
 		
 		for(neuron_next = 0; neuron_next < NN->NNeurons[layer+1]; neuron_next++){
-			
 			for(neuron_it = 0; neuron_it < NN->NNeurons[layer]; neuron_it++){
-				Work[neuron_next] += In[neuron_it]* nn_GetWeight(NN,layer,neuron_it,neuron_next);
+				elog(INFO, "Peso: %d %d %d %lf",layer,neuron_it,neuron_next,nn_GetWeight(NN,layer,neuron_it,neuron_next));
+				Work[neuron_next] += In[neuron_it] * nn_GetWeight(NN,layer,neuron_it,neuron_next);
 			}
-
 			Work[neuron_next] += NN->Bias * nn_GetBiasWeight(NN,layer,neuron_next);
 			nn_activation_switch(NN->FunctionActivation, Work[neuron_next],Work[neuron_next]);
 		}
+		elog(INFO, "-------------");
 
 		//trocando os ponteiros
 		In=(double*)((long)In^(long)Work);
