@@ -15,6 +15,7 @@ var gulp = require('gulp'),
   sass = require('gulp-sass'),
   sourcemaps = require('gulp-sourcemaps'),
   header = require('gulp-header'),
+  ngAnnotate = require('gulp-ng-annotate'),
   fileinclude = require('gulp-file-include');
 
 var name = 'pgminer';
@@ -39,7 +40,7 @@ gulp.task('jshint', function () {
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('uglify', function () {
+gulp.task('uglifyJquery', function () {
   return es.merge([
       gulp.src([
         "./node_modules/jquery/dist/jquery.min.js",
@@ -52,7 +53,24 @@ gulp.task('uglify', function () {
         .pipe(sourcemaps.write('./maps'))
         .pipe(header(headertext))
     ])
-    .pipe(concat(name+'.min.js'))
+    .pipe(concat(name+'.jquery.min.js'))
+    .pipe(gulp.dest(destJs));
+});
+
+gulp.task('uglifyAngular', function () {
+  return es.merge([
+      gulp.src([
+        "./node_modules/angular/angular.min.js"
+      ]),
+      gulp.src('./src/**/*.js')
+        .pipe(sourcemaps.init())
+        .pipe(concat('scripts.js'))
+        .pipe(ngAnnotate())
+        .pipe(uglify({mangle: false}))
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(header(headertext))
+    ])
+    .pipe(concat(name+'.angular.min.js'))
     .pipe(gulp.dest(destJs));
 });
 
@@ -86,11 +104,12 @@ gulp.task('fonts', function(){
 
 gulp.task('dist', function(){
   console.log('Watching...');
-  gulp.watch(script, ['jshint', 'uglify']);
+  gulp.watch(script, ['jshint', 'uglifyJquery']);
+  gulp.watch(script, ['jshint', 'uglifyAngular']);
   gulp.watch(styles, ['css']);
   gulp.watch(htmls, ['htmlmin']);
 });
 
 gulp.task('default',function(cb){
-  return runSequence(['jshint', 'uglify', 'htmlmin', 'css', 'fonts'], 'dist', cb);
+  return runSequence(['jshint', 'uglifyJquery', 'uglifyAngular', 'htmlmin', 'css', 'fonts'], 'dist', cb);
 });
