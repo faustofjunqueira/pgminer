@@ -1,25 +1,36 @@
 {
-  nome: 'blas_multiply',
-  descricao:'Função executa a multiplicação de duas matrizes. C = A * B',
-  cabecalho:'las_multiply(a bigint, b bigint) RETURNS bigint',
+  nome: 'cleanup_table',
+  descricao:'Zera ou cria uma tabela',
+  cabecalho:'cleanup_table(table_name text, table_columns text, make_temp bool)',
   parametros: [
-    parametroFactory.criar('A', 'bigint', 'Ponteiro para Matriz A')
-    parametroFactory.criar('B', 'bigint', 'Ponteiro para Matriz B')
+    parametroFactory.criar('table_name', 'text', 'Nome da tabela'),
+    parametroFactory.criar('table_columns', 'text', "Colunas da tabela. Ex: '( GRUPO INTEGER PRIMARY KEY, VALOR FLOAT8[] NOT NULL )'"),
+    parametroFactory.criar('make_temp', 'bool', 'Se true, a tabela será temporária, caso contrário a tabela será permanente')
   ],
-  retorno:[
-    retornoFactory.criar('C', 'bigint', 'Ponteiro para matriz resultante')
-  ]
+  retorno:[]
 },
 {
-  nome: 'classe2vector',
-  descricao:'Transforma o conjunto de classes para vetores de valores 0 a 1',
-  cabecalho:'classe2vector(sql_distinct_classes text, OUT classe text, OUT vector double precision[]) RETURNS SETOF record',
+  nome: 'apply_sigmoid',
+  descricao:'Aplica a função sigmoid sobre cada elemento x da matriz m. Sigmoid: 2.0/(1.0 + exp( -16.0*x ) ) - 1.0',
+  cabecalho:'cos(a matrix, b matrix) | cos(a matrix, b matrix)',
   parametros: [
-    parametroFactory.criar("sql_distinct_classes', 'text', 'EX: select * from classe2vector( 'select distinct classe from iris order by classe' )")
+    parametroFactory.criar('m', 'matrix', 'Matriz de valores')
   ],
   retorno:[
-    retornoFactory.criar('classe', 'matrix', 'Matriz com valores aplicados na função sigmoid'),
-    retornoFactory.criar('vector', 'double precision[]', 'Matriz com valores aplicados na função sigmoid')
+    retornoFactory.criar('c', 'matrix', 'Matriz com valores aplicados na função sigmoid')
   ]
 },
+
+
+{
+  nome: 'apply_sigmoid',
+  descricao:'Aplica a função sigmoid sobre cada elemento x da matriz m. Sigmoid: 2.0/(1.0 + exp( -16.0*x ) ) - 1.0',
+  cabecalho:'cleanup_table(table_name text, table_columns text, make_temp bool)',
+  parametros: [
+    parametroFactory.criar('m', 'matrix', 'Matriz de valores')
+  ],
+  retorno:[
+    retornoFactory.criar('c', 'matrix', 'Matriz com valores aplicados na função sigmoid')
+  ]
+}
 
