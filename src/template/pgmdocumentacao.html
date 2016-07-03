@@ -5,10 +5,10 @@
 <div class="row lista-funcao-dash">
   <div class="col-md-3 lista-funcao-dash-sidebar">
     <!--p class="lead" >Manual de Referência</p-->
-    <input class="form-control" placeholder="Procurar...">
+    <input class="form-control" ng-model="queryFuncao" placeholder="Procurar...">
     <hr>
     <ul class="lista-funcao">
-      <li ng-repeat="funcao in listaFuncao" ng-click="escolherFuncao(funcao)" class="lista-funcao-item">
+      <li ng-repeat="funcao in listaFuncao | filter: {nome: queryFuncao}" ng-click="escolherFuncao(funcao)" class="lista-funcao-item">
         {{funcao.nome}}
       </li>
     </ul>
