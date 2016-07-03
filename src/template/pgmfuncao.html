@@ -4,8 +4,11 @@
 </section>
 <section>
   <h1>Sintaxe</h1>
-  <div class="well" role="alert">
+  <div ng-if="!funcao.cabecalho.length" class="well" role="alert">
     {{funcao.cabecalho}}
+  </div>
+  <div ng-if="funcao.cabecalho.length" ng-repeat="cabecalho in funcao.cabecalho" class="well" role="alert">
+    {{cabecalho}}
   </div>
   <h3>Parâmetro</h3>
   <span ng-if="!funcao.parametros || !funcao.parametros.length">Nenhum</span>

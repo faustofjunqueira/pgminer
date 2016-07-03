@@ -27,7 +27,7 @@
       {
         nome: 'blas_multiply',
         descricao:'Função executa a multiplicação de duas matrizes. C = A * B',
-        cabecalho:'las_multiply(a bigint, b bigint) RETURNS bigint',
+        cabecalho:'blas_multiply(a bigint, b bigint) RETURNS bigint',
         parametros: [
           parametroFactory.criar('A', 'bigint', 'Ponteiro para Matriz A'),
           parametroFactory.criar('B', 'bigint', 'Ponteiro para Matriz B')
@@ -46,6 +46,29 @@
         retorno:[
           retornoFactory.criar('classe', 'matrix', 'Matriz com valores aplicados na função sigmoid'),
           retornoFactory.criar('vector', 'double precision[]', 'Matriz com valores aplicados na função sigmoid')
+        ]
+      },
+      {
+        nome: 'cleanup_table',
+        descricao:'Zera ou cria uma tabela',
+        cabecalho:'cleanup_table(table_name text, table_columns text, make_temp bool)',
+        parametros: [
+          parametroFactory.criar('table_name', 'text', 'Nome da tabela'),
+          parametroFactory.criar('table_columns', 'text', "Colunas da tabela. Ex: '( GRUPO INTEGER PRIMARY KEY, VALOR FLOAT8[] NOT NULL )'"),
+          parametroFactory.criar('make_temp', 'bool', 'Se true, a tabela será temporária, caso contrário a tabela será permanente')
+        ],
+        retorno:[]
+      },
+      {
+        nome: 'cos',
+        descricao:'Aplica a função cosseno nos pontos',
+        cabecalho:['cos(a double precision[], b double precision[])','cos(a matrix, b matrix)'],
+        parametros: [
+          parametroFactory.criar('A', 'double precision[] | matrix', 'Matriz ou vetor A'),
+          parametroFactory.criar('B', 'double precision[] | matrix', 'Matriz ou vetor B')
+        ],
+        retorno:[
+          retornoFactory.criar('cosseno', 'double precision', 'Valor da função cosseno')
         ]
       },
     ];
