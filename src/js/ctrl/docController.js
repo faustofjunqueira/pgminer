@@ -3,39 +3,27 @@
   app.controller('DocController', function($scope,parametroFactory, retornoFactory){
     $scope.listaFuncoes = [
       {
-        id: 1,
         nome: 'apply_inverse_sigmoid',
-        descricao:'oi mundo',
-        cabecalho:'qlqr(1,b)',
+        descricao:'Aplica a função inversa da sigmoid sobre cada elemento x 1da matriz m. Inversa da sigmoid: -log( 2.0/(x+1.0) -1.0)/16.0',
+        cabecalho:'apply_inverse_sigmoid(in m matrix, out c matrix) RETURNS matrix',
         parametros: [
-          parametroFactory.criar('par1', 'integer', 'simples parametro'),
-          parametroFactory.criar('par2', 'string', 'simples parametro22')
+          parametroFactory.criar('m', 'matrix', 'Matriz de valores')
         ],
         retorno:[
-          retornoFactory.criar('par1', 'integer', 'simples parametro'),
-          retornoFactory.criar('par2', 'string', 'simples parametro22')
-        ],
-        veja:[
-          '/lin', '/das'
+          retornoFactory.criar('c', 'matrix', 'Matriz com valores aplicados na função')
         ]
       },
       {
-        id: 2,
-        nome: 'qlqr coisa2',
-        descricao:'oi mu3123123ndo',
-        cabecalho:'qlqr(1,b)',
+        nome: 'apply_sigmoid',
+        descricao:'Aplica a função sigmoid sobre cada elemento x da matriz m. Sigmoid: 2.0/(1.0 + exp( -16.0*x ) ) - 1.0',
+        cabecalho:'apply_sigmoid(in m matrix, out c matrix) RETURNS matrix',
         parametros: [
-          parametroFactory.criar('par1', 'integer', 'simples parametro'),
-          parametroFactory.criar('par2', 'string', 'simples parametro22132231')
+          parametroFactory.criar('m', 'matrix', 'Matriz de valores')
         ],
         retorno:[
-          retornoFactory.criar('par1', 'integer', 'simples parametro'),
-          retornoFactory.criar('par2', 'string', 'simples parametro22')
-        ],
-        veja:[
-          '1', '2'
+          retornoFactory.criar('c', 'matrix', 'Matriz com valores aplicados na função sigmoid')
         ]
-      },
+      }
     ];
   });
 
