@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "event-stream": "^3.3.2",
+    "express": "^4.14.0",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-clean-css": "^2.0.6",

@@ -58,20 +58,15 @@ gulp.task('uglifyJquery', function () {
 });
 
 gulp.task('uglifyAngular', function () {
-  return es.merge([
-      gulp.src([
-        "./node_modules/angular/angular.min.js"
-      ]),
-      gulp.src('./src/**/*.js')
+  return gulp.src('./src/**/*.js')
         .pipe(sourcemaps.init())
         .pipe(concat('scripts.js'))
         .pipe(ngAnnotate())
         .pipe(uglify({mangle: false}))
-        .pipe(sourcemaps.write('./maps'))
+        .pipe(concat(name+'.angular.min.js'))
         .pipe(header(headertext))
-    ])
-    .pipe(concat(name+'.angular.min.js'))
-    .pipe(gulp.dest(destJs));
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest(destJs));
 });
 
 gulp.task('htmlmin', function () {
@@ -105,7 +100,7 @@ gulp.task('fonts', function(){
 gulp.task('dist', function(){
   console.log('Watching...');
   gulp.watch(script, ['jshint', 'uglifyJquery']);
-  gulp.watch(script, ['jshint', 'uglifyAngular']);
+  gulp.watch('./src/**/*.js', ['jshint', 'uglifyAngular']);
   gulp.watch(styles, ['css']);
   gulp.watch(htmls, ['htmlmin']);
 });

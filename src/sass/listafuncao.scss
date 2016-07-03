@@ -1,0 +1,45 @@
+.lista-funcao-dash {
+
+  .lista-funcao-dash-sidebar{
+    .lead{
+      margin: 0;
+    }
+
+    input.procurar{
+      border: none;
+      border-radius: 20px;
+    }
+
+    .lista-funcao {
+      padding: 0 15px;
+      list-style: none;
+
+      .lista-funcao-item{
+        margin-bottom: 5px;
+        cursor: pointer;
+        color: #888;
+
+        &:hover {
+          color: black;
+          text-decoration: underline;
+        }
+
+        &:active, .ativado{
+          color: black;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.funcao-titulo {
+  font-family: 'Racing Sans One', cursive;
+  font-size: 40px;
+  margin: 15px 0;
+}
+
+input.form-control:focus {
+  border-color: #101010;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(18, 21, 23, 0.6);
+}

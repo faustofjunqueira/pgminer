@@ -1,0 +1,50 @@
+<section>
+  <h1 style="margin-top: 0">Descrição</h1>
+  {{funcao.descricao}}
+</section>
+<section>
+  <h1>Sintaxe</h1>
+  <div class="well" role="alert">
+    {{funcao.cabecalho}}
+  </div>
+  <h3>Parâmetro</h3>
+  <span ng-if="!funcao.parametros || !funcao.parametros.length">Nenhum</span>
+  <table ng-if="funcao.parametros && funcao.parametros.length" class="table table-striped table-bordered">
+    <thread>
+      <tr>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th>Descrição</th>
+      </tr>
+    </thread>
+    <tbody>
+      <tr ng-repeat="param in funcao.parametros">
+        <td>{{param.nome}}</td>
+        <td><code>{{param.tipo}}</code></td>
+        <td>{{param.descricao}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Retorno</h3>
+  <table class="table table-striped table-bordered" ng-if="funcao.retorno && funcao.retorno.length">
+    <thread>
+      <tr>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th>Descrição</th>
+      </tr>
+    </thread>
+    <tbody>
+      <tr ng-repeat="ret in funcao.retorno">
+        <td>{{ret.nome}}</td>
+        <td><code>{{ret.tipo}}</code></td>
+        <td>{{ret.descricao}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <span ng-if="!funcao.retorno || !funcao.retorno.length">Nenhum</span>
+</section>
+<hr>
+<section ng-if="funcao.veja && funcao.veja.length">
+  <h3>Veja também</h3>
+</section>

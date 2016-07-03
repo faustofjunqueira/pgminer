@@ -1,0 +1,19 @@
+<div class="funcao-titulo">
+  {{escolhida.nome}}
+</div>
+<hr>
+<div class="row lista-funcao-dash">
+  <div class="col-md-3 lista-funcao-dash-sidebar">
+    <!--p class="lead" >Manual de Referência</p-->
+    <input class="form-control" placeholder="Procurar...">
+    <hr>
+    <ul class="lista-funcao">
+      <li ng-repeat="funcao in listaFuncao" ng-click="escolherFuncao(funcao)" class="lista-funcao-item">
+        {{funcao.nome}}
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-7">
+    <pgm-funcao funcao="escolhida"></pgm-funcao>
+  </div>
+</div>
