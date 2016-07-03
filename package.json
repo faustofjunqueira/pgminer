@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/faustofjunqueira/pgminer#readme",
   "dependencies": {
+    "angular": "^1.5.7",
     "bootstrap": "^3.3.6",
     "gulp": "^3.9.1",
     "gulp-less": "^3.0.5",
