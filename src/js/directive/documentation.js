@@ -7,11 +7,6 @@ app.directive('pgmDocumentacao', function(){
     scope: {
       listaFuncao: '=lista'
     },
-    controller: function($scope, $element, $attrs){
-      this.teste = function(){
-        alert($scope.listaFuncao);
-      };
-    },
     link: function($scope,$element,$attr, ctrl){
       $scope.escolhida = $scope.listaFuncao[0];
       $scope.escolherFuncao = function(funcao){
@@ -28,7 +23,12 @@ app.directive('pgmFuncao', function(){
       funcao: '='
     },
     restrict: 'EA',
-    templateUrl: '/pgminer/src/template/pgmfuncao.html'
+    templateUrl: '/pgminer/src/template/pgmfuncao.html',
+    controller: function($scope){
+      $scope.isArray = function(e){
+        return Array.isArray(e);
+      }
+    }
   };
 });
 
