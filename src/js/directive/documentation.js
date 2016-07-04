@@ -2,7 +2,7 @@
 
 app.directive('pgmDocumentacao', function(){
   return {
-    templateUrl: '/src/template/pgmdocumentacao.html',
+    templateUrl: '/pgminer/src/template/pgmdocumentacao.html',
     restrict: 'EA',
     scope: {
       listaFuncao: '=lista'
@@ -28,7 +28,7 @@ app.directive('pgmFuncao', function(){
       funcao: '='
     },
     restrict: 'EA',
-    templateUrl: '/src/template/pgmfuncao.html'
+    templateUrl: '/pgminer/src/template/pgmfuncao.html'
   };
 });
 
