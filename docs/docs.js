@@ -24,7 +24,7 @@
   descricao:'Retorna a linha de uma matriz',
   cabecalho:'get_line(m matrix, line integer) RETURNS double precision[]',
   parametros: [
-    parametroFactory.criar('m', 'matrix', 'Matriz de valores')
+    parametroFactory.criar('m', 'matrix', 'Matriz de valores'),
     parametroFactory.criar('line', 'integer', 'índice da linha')
   ],
   retorno:[
@@ -50,7 +50,7 @@
     'inverse_sigmoid(e double precision) RETURNS double precision'
   ]
   parametros: [
-    parametroFactory.criar('a', 'double precision[]', 'array de valores que serão aplicados a x na função ')
+    parametroFactory.criar('a', 'double precision[]', 'array de valores que serão aplicados a x na função '),
     parametroFactory.criar('x', 'double precision', 'valor a ser aplicado na função')
   ],
   retorno:[
@@ -61,7 +61,7 @@
 {
   nome: 'make_dense_matrix',
   descricao:"Cria uma matiz densa a partir de um SQL de uma matriz esparsa",
-  cabecalho:'make_dense_matrix(sql text, zero text DEFAULT ''::text, centrar boolean DEFAULT true) RETURNS bigint',
+  cabecalho:"make_dense_matrix(sql text, zero text DEFAULT ''::text, centrar boolean DEFAULT true) RETURNS bigint",
   parametros: [
     parametroFactory.criar('sql', 'text', "SQL de uma matriz esparsa do tipo 'select linha, coluna, valor from ..."),
     parametroFactory.criar('zero', 'text', "significa que zero é zero; não haverá substituição; 'mavg' significa substituir zero pela média dos valores da matriz inteira; 'lavg' significa substituir os zeros de cada linha pela média de cada linha; 'cavg' significa substituir os zeros de cada coluna pela média de cada coluna"),
@@ -76,9 +76,7 @@
   descricao:'Cria uma matriz a partir de um sql',
   cabecalho:'make_matrix(sql text, OUT matrix bigint, OUT keys bigint) RETURNS record',
   parametros: [
-    parametroFactory.criar('sql', 'text', "'sql' deve ser uma string retornando (id,valor), onde "id integer primary key" e valor é um array float8[] com os valores do ponto, ou uma tabela/view com as colunas id::integer, valor::float8[]
-  EX1: 'select id, array[ x, y ] valor from tabela'
-  EX2: 'select cast( row_number() over() as integer ) id, array[ x, y ] valor from tabela'")
+    parametroFactory.criar('sql', 'text', "'sql' deve ser uma string retornando (id,valor), onde 'id integer primary key' e valor é um array float8[] com os valores do ponto, ou uma tabela/view com as colunas id::integer, valor::float8[] EX1: 'select id, array[ x, y ] valor from tabela' EX2: 'select cast( row_number() over() as integer ) id, array[ x, y ] valor from tabela'")
   ],
   retorno:[
     retornoFactory.criar('matrix', 'bigint', "ponteiro para matrix"),
@@ -108,8 +106,8 @@
     'matrix(sql text, OUT c matrix) RETURNS matrix'
   ],
   parametros: [
-    parametroFactory.criar('ptr_matrix', 'bigint', 'ponteiro para a matrix')
-    parametroFactory.criar('bidimensional_array','double precision[]', 'array de valores de duas dimensões')
+    parametroFactory.criar('ptr_matrix', 'bigint', 'ponteiro para a matrix'),
+    parametroFactory.criar('bidimensional_array','double precision[]', 'array de valores de duas dimensões'),
     parametroFactory.criar('sql','text', 'sql similar ao make_matrix')
   ],
   retorno:[
