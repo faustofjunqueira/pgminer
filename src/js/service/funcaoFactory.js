@@ -7,8 +7,8 @@ app.service('funcaoFactory', function(){
       nome: nome,
       cabecalho: cabecalho,
       descricao: descricao,
-      param: paramList,
-      ret: retList
+      parametros: paramList,
+      retorno: retList
     };
   };
 

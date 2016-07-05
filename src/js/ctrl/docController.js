@@ -1,7 +1,20 @@
 (function(app){
 
   app.controller('DocController', function($scope,parametroFactory, retornoFactory, tipoFactory, operadorFactory, funcaoFactory){
-    $scope.listaFuncoes = [
+
+    function setup(lista){
+      var r = angular.copy(lista);
+      for(var i in lista){
+        if(lista[i].tipo){
+          lista[i].funcoes.forEach(function(f){
+            r.push(f);
+          });
+        }
+      }
+      return r;
+    }
+
+    var listaFuncoes = [
       {
         nome: 'apply_inverse_sigmoid',
         descricao:'Aplica a função inversa da sigmoid sobre cada elemento x 1da matriz m. Inversa da sigmoid: -log( 2.0/(x+1.0) -1.0)/16.0',
@@ -651,6 +664,8 @@
         ]
       }
     ];
+
+    $scope.lista = setup(listaFuncoes);
   });
 
 })(angular.module('pgminer'));

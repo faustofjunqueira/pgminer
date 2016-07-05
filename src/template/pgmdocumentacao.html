@@ -8,8 +8,8 @@
     <input class="form-control" ng-model="queryFuncao" placeholder="Procurar...">
     <hr>
     <ul class="lista-funcao">
-      <li ng-repeat="funcao in listaFuncao | filter: {nome: queryFuncao}" ng-click="escolherFuncao(funcao)" class="lista-funcao-item">
-        {{funcao.nome}}
+      <li ng-repeat="funcao in listaFuncao | filter: {nome: queryFuncao} | orderBy: 'nome'" ng-click="escolherFuncao(funcao)" class="lista-funcao-item">
+        {{funcao.nome}}<strong ng-if="funcao.tipo"> (tipo) </strong>
       </li>
     </ul>
   </div>

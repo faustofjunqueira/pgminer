@@ -68,23 +68,23 @@
         </tr>
       </thread>
       <tbody>
-        <tr ng-repeat="param in func.param">
+        <tr ng-repeat="param in func.parametros">
           <td width="5" title="Parâmetro"><span class="glyphicon glyphicon glyphicon-arrow-right" aria-hidden="true"></span></td>
           <td width="145">{{param.nome}}</td>
           <td width="150"><code>{{param.tipo}}</code></td>
           <td>{{param.descricao}}</td>
         </tr>
-        <tr ng-if="!func.param || !func.param.length">
+        <tr ng-if="!func.parametros || !func.parametros.length">
           <td width="5"><span class="glyphicon glyphicon glyphicon-arrow-right" aria-hidden="true"></span></td>
           <td colspan="3"><var>Nenhum</var></td>
         </tr>
-        <tr ng-repeat="ret in func.ret">
+        <tr ng-repeat="ret in func.retorno">
           <td width="5" title="Retorno"><span class="glyphicon glyphicon glyphicon-arrow-left" aria-hidden="true"></span></td>
           <td width="145">{{ret.nome}}</td>
           <td width="150"><code>{{ret.tipo}}</code></td>
           <td>{{ret.descricao}}</td>
         </tr>
-        <tr ng-if="!func.ret || !func.ret.length">
+        <tr ng-if="!func.ret || !func.retorno.length">
           <td width="5"><span class="glyphicon glyphicon glyphicon-arrow-left" aria-hidden="true"></span></td>
           <td colspan="3"><var>Nenhum</var></td>
         </tr>
