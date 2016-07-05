@@ -43,7 +43,7 @@
       </tr>
     </tbody>
   </table>
-  <span ng-if="!funcao.operador || !funcao.operador">Nenhum operador declarado para esse tipo</span>
+  <var ng-if="!funcao.operador || !funcao.operador">Nenhum operador declarado para esse tipo</var>
 </section>
 <section>
   <div class="row">
@@ -76,7 +76,7 @@
         </tr>
         <tr ng-if="!func.param || !func.param.length">
           <td width="5"><span class="glyphicon glyphicon glyphicon-arrow-right" aria-hidden="true"></span></td>
-          <td colspan="3">Nenhum</td>
+          <td colspan="3"><var>Nenhum</var></td>
         </tr>
         <tr ng-repeat="ret in func.ret">
           <td width="5" title="Retorno"><span class="glyphicon glyphicon glyphicon-arrow-left" aria-hidden="true"></span></td>
@@ -86,7 +86,7 @@
         </tr>
         <tr ng-if="!func.ret || !func.ret.length">
           <td width="5"><span class="glyphicon glyphicon glyphicon-arrow-left" aria-hidden="true"></span></td>
-          <td colspan="3">Nenhum</td>
+          <td colspan="3"><var>Nenhum</var></td>
         </tr>
       </tbody>
     </table>

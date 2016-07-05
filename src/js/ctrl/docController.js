@@ -590,6 +590,65 @@
             retornoFactory.criar('accurate','double precision','Acurácia da RNA'),
           ]),
         ]
+      },
+
+      {
+        nome: 'fann',
+        descricao:'Estrutura para ponteiro da estrutura fann',
+        tipo: {
+          nome: 'fann',
+          lang: 'pgPL/SQL',
+          campos: [
+            tipoFactory.criar('ann', 'bigint', 'ponteiro para struct da fann'),
+          ]
+        },
+        operador: [
+          operadorFactory.criar('*','double precision[]','opr_fann_apply - Ex: double precision[] / fann'),
+        ],
+        funcoes: [
+          funcaoFactory.criar('pgm_nn_fann_get_mse_report','pgm_nn_fann_get_mse_report(fann bigint) RETURNS double precision','Obtem o erro mínimo quadrado',[
+            parametroFactory.criar('fann','bigint','ponteiro para estrutura fann'),
+          ],[
+            retornoFactory.criar('mse','double precision[]','Erro mínimo quadrado'),
+          ]),
+          funcaoFactory.criar('pgm_nn_fann2neuralnet','pgm_nn_fann2neuralnet(fann bigint) RETURNS neuralnet','Converte ponteiro fann para neuralnet',[
+            parametroFactory.criar('fann','bigint','Ponteiro para estrutura fann'),
+          ],[
+            retornoFactory.criar('nn','neuralnet','RNA convertida'),
+          ]),
+          funcaoFactory.criar('pgm_nn_fann_create_train_data','pgm_nn_fann_create_train_data(data_matrix_input bigint, data_matrix_ouput bigint) RETURNS bigint','Cria estrutura de dados para treinamento. Recomendado usar prepare_data_to_learn',[
+            parametroFactory.criar('data_matrix_input','bigint','ponteiro para pgm_matrix_double com dados de entrada'),
+            parametroFactory.criar('data_matrix_output','bigint','ponteiro para pgm_matrix_double com dados de saída'),
+          ],[
+            retornoFactory.criar('train_data','bigint','RNA de-serializada'),
+          ]),
+          funcaoFactory.criar('pgm_nn_fann_free_train_data','pgm_nn_fann_free_train_data(train_data bigint) RETURNS void','Desaloca train_data',[
+            parametroFactory.criar('train_data','bigint','ponteiro para train_data'),
+          ],[]),
+          funcaoFactory.criar('pgm_nn_fann_run','pgm_nn_fann_run(ann bigint, _input double precision[]) RETURNS double precision[]','Função que valida a rede para uma determinada entrada.',[
+            parametroFactory.criar('ann','bigint','ponteiro para estrutura da fann'),
+            parametroFactory.criar('_input','double precision[]','registro de entrada a ser classificado'),
+          ],[
+            retornoFactory.criar('classificacao','double precision[]','Vetor com a probabiblidade de classificacao'),
+          ]),
+          funcaoFactory.criar('pgm_nn_fann_test','pgm_nn_fann_test(train_data bigint, ann bigint, OUT mse double precision) RETURNS double precision','Efetua teste na RNA com um dado conjunto de entrada',[
+            parametroFactory.criar('train_data','bigint','Ponteiro para estrutura train_data'),
+            parametroFactory.criar('ann','bigint','Ponteiro para estrutura fann'),
+          ],[
+            retornoFactory.criar('mse','double precision','Erro mínino quadrado'),
+          ]),
+          funcaoFactory.criar('pgm_nn_fann_train','pgm_nn_fann_train(train_data bigint, hidden_layer integer[], functionActivation integer, steepness double precision, max_epochs integer, epochs_between_reports integer, desired_error double precision) RETURNS bigint','Executa treinamento de uma RNA',[
+            parametroFactory.criar('train_data','bigint','Ponteiro para estrutura train_data'),
+            parametroFactory.criar('hidden_layer', 'integer[]', 'Número de neurônios nas camadas intermediária.'),
+            parametroFactory.criar('functionActivation', 'integer', 'Valor da função de Ativação'),
+            parametroFactory.criar('steepness', 'double precision', 'Valor de steepness'),
+            parametroFactory.criar('max_epochs', 'integer', 'Número máximo de épocas para convergir'),
+            parametroFactory.criar('epochs_between_reports', 'integer', 'Número de epocas entre relatórios.'),
+            parametroFactory.criar('desired_error', 'double precision', 'Erro desejado'),
+          ],[
+            retornoFactory.criar('nn','bigint','Ponteiro para RNA criada. No formato de neuralnet'),
+          ])
+        ]
       }
     ];
   });
