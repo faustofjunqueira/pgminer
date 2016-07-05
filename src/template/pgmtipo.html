@@ -1,0 +1,100 @@
+<section>
+  <h1 style="margin-top: 0">Descrição</h1>
+  {{funcao.descricao}}
+</section>
+<section>
+  <h1>Tipo</h1>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">{{funcao.tipo.nome}} <span class="pull-right">linguagem: <strong>{{funcao.tipo.lang}}</strong></span></div>
+    <table class="table">
+      <thread>
+        <tr>
+          <th width="150">Nome</th>
+          <th width="150">Tipo</th>
+          <th>Descrição</th>
+        </tr>
+      </thread>
+      <tbody>
+        <tr ng-repeat="parametro in funcao.tipo.campos">
+          <td width="150">{{parametro.nome}}</td>
+          <td width="150"><code>{{parametro.tipo}}</code></td>
+          <td>{{parametro.descricao}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section>
+  <h1>Operadores</h1>
+  <table ng-if="funcao.operador && funcao.operador.length > 0" class="table table-striped table-bordered">
+    <thread>
+      <tr>
+        <th width="150">Operador</th>
+        <th width="150">Tipo</th>
+        <th>função</th>
+      </tr>
+    </thread>
+    <tbody>
+      <tr ng-repeat="operador in funcao.operador">
+        <td class="text-center"><strong>{{operador.operador}}</strong></td>
+        <td width="150"><code>{{operador.tipo}}</code></td>
+        <td>{{operador.funcao}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <span ng-if="!funcao.operador || !funcao.operador">Nenhum operador declarado para esse tipo</span>
+</section>
+<section>
+  <div class="row">
+    <div class="col-md-12 funcaes-title">
+      <h1>Funções</h1>
+      <span class="pull-right"><input class="form-control" ng-model="queryFuncao" placeholder="Procurar..."></span>
+    </div>
+  </div>
+
+  <div class="panel panel-default" ng-if="funcao.funcoes && funcao.funcoes" ng-repeat="func in funcao.funcoes | filter: {nome: queryFuncao}">    
+    <div class="panel-heading">{{func.cabecalho}}</div>
+    <div class="panel-body">
+      <p>{{func.descricao}}</p>
+    </div>
+    <table class="table">
+      <thread>
+        <tr>
+          <th width="5"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span></th>
+          <th width="145">Nome</th>
+          <th width="150">Tipo</th>
+          <th>Descrição</th>
+        </tr>
+      </thread>
+      <tbody>
+        <tr ng-repeat="param in func.param">
+          <td width="5" title="Parâmetro"><span class="glyphicon glyphicon glyphicon-arrow-right" aria-hidden="true"></span></td>
+          <td width="145">{{param.nome}}</td>
+          <td width="150"><code>{{param.tipo}}</code></td>
+          <td>{{param.descricao}}</td>
+        </tr>
+        <tr ng-if="!func.param || !func.param.length">
+          <td width="5"><span class="glyphicon glyphicon glyphicon-arrow-right" aria-hidden="true"></span></td>
+          <td colspan="3">Nenhum</td>
+        </tr>
+        <tr ng-repeat="ret in func.ret">
+          <td width="5" title="Retorno"><span class="glyphicon glyphicon glyphicon-arrow-left" aria-hidden="true"></span></td>
+          <td width="145">{{ret.nome}}</td>
+          <td width="150"><code>{{ret.tipo}}</code></td>
+          <td>{{ret.descricao}}</td>
+        </tr>
+        <tr ng-if="!func.ret || !func.ret.length">
+          <td width="5"><span class="glyphicon glyphicon glyphicon-arrow-left" aria-hidden="true"></span></td>
+          <td colspan="3">Nenhum</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <span ng-if="!funcao.funcoes || !funcao.funcoes">Nenhuma função declarada para esse tipo</span>
+</section>
+<hr>
+<section ng-if="funcao.veja && funcao.veja.length">
+  <h3>Veja também</h3>
+</section>

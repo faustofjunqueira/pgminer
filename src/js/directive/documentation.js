@@ -32,6 +32,19 @@ app.directive('pgmFuncao', function(){
   };
 });
 
-
+app.directive('pgmTipo', function(){
+  return {
+    scope: {
+      funcao: '='
+    },
+    restrict: 'EA',
+    templateUrl: '/pgminer/src/template/pgmtipo.html',
+    controller: function($scope){
+      $scope.isArray = function(e){
+        return Array.isArray(e);
+      }
+    }
+  };
+});
 
 })(angular.module('pgminer'));

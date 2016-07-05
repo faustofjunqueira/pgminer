@@ -14,6 +14,7 @@
     </ul>
   </div>
   <div class="col-md-9">
-    <pgm-funcao funcao="escolhida"></pgm-funcao>
+    <pgm-funcao ng-if="!escolhida.tipo" funcao="escolhida"></pgm-funcao>
+    <pgm-tipo ng-if="escolhida.tipo" funcao="escolhida"></pgm-tipo>
   </div>
 </div>

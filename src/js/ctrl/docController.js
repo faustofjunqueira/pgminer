@@ -1,6 +1,6 @@
 (function(app){
 
-  app.controller('DocController', function($scope,parametroFactory, retornoFactory){
+  app.controller('DocController', function($scope,parametroFactory, retornoFactory, tipoFactory, operadorFactory, funcaoFactory){
     $scope.listaFuncoes = [
       {
         nome: 'apply_inverse_sigmoid',
@@ -448,6 +448,149 @@
         ]
       },
 
+      {
+        nome: 'neuralnet',
+        descricao:'Módulo de operação da RNA (rede neural artificial) que é possivel serializar e inserir em tabelas. Serialização da neuralnet: #NumeroDeCamadas#NeuroniosPorCamada#FunçãoDeAtivação#InputMin InputMax OutputMin OutputMax#Stepness#Bias#Pesos',
+        tipo: {
+          nome: 'neuralnet',
+          lang: 'C',
+          campos: [
+            tipoFactory.criar('size', 'int', 'tamanho de byte da struct'),
+            tipoFactory.criar('NLayers', 'unsigned short', 'numero de camadas'),
+            tipoFactory.criar('FunctionActivation', 'unsigned short', 'codigo da função de ativação'),
+            tipoFactory.criar('NNeurons[MAX_LAYERS]', 'unsigned int', 'numero de neuronios por camada. MAX_LAYERS = 5'),
+            tipoFactory.criar('TotalNeurons', 'unsigned int', 'numero total de neurônios presentes na ANN'),
+            tipoFactory.criar('TotalWeights', 'unsigned int', 'Número total de pesos da rede neural'),
+            tipoFactory.criar('Bias', 'unsigned int', 'Utilizado na conversão para FANN'),
+            tipoFactory.criar('Steepness', 'double', 'Valor do Steepness. Parâmetro de compatibilidade com Fann'),
+            tipoFactory.criar('MSE', 'double', 'Valor do Erro mínimo quadrado. Parâmetro de compatibilidade com Fann'),
+            tipoFactory.criar('BihiperbolicLambda', 'double', 'Parâmetros da função de ativação bi-hiperbolica'),
+            tipoFactory.criar('BihiperbolicT1', 'double', 'Parâmetros da função de ativação bi-hiperbolica'),
+            tipoFactory.criar('BihiperbolicT2', 'double', 'Parâmetros da função de ativação bi-hiperbolica'),
+            tipoFactory.criar('InputMin', 'double', 'Limite de input mínimo. Parâmetros de escala. Default = 0'),
+            tipoFactory.criar('InputMax', 'double', 'Limite de inpute máximo. Parâmetros de escala. Default = 1.0'),
+            tipoFactory.criar('OutputMin', 'double', 'Limite de output mínimo. Parâmetros de escala. Default = 0'),
+            tipoFactory.criar('OutputMax', 'double', 'Limite de output máximo. Parâmetros de escala. Default = 1.0'),
+            tipoFactory.criar('WeightsPos[MAX_LAYERS - 1]', 'unsigned int', 'Vetor com o indice que inicia a sequencia de pesos da camada no vetor Weights'),
+            tipoFactory.criar('Weights[0]','double', 'Vetor que guarda os valores dos neuronios e os pesos. Para acessar os pesos basta da um GetWeght(layer). OBS: Pesos: primeira camada: Bias[layer][i] - Neuron[layer+1][i]; Neuron[layer][j] - Neuron[layer+1][i]; Neuron[layer][j+1] - Neuron[layer+1][i]; assim sucessivamente. Lembrando que a ultima camada nao tem Bias')
+          ]
+        },
+        operador: [
+          operadorFactory.criar('/','integer','opr_nn_split_part - Ex: neuralnet / integer'),
+          operadorFactory.criar('*','double precision[]','pgm_nn_evaluate - Ex: neuralnet * double precision[] ou double precision[] * neuralnet')
+        ],
+        funcoes: [
+          funcaoFactory.criar('pgm_neuralnetin', 'pgm_neuralnetin(st cstring) RETURNS neuralnet','De-Serialização de neuralnet', [
+            parametroFactory.criar('st','cstring','String de neuralnet serializado utilizando pgm_neuralnetout'),
+          ],[
+            retornoFactory.criar('nn','neuralnet','RNA de-serializada'),
+          ]),
+          funcaoFactory.criar('pgm_neuralnetout', 'pgm_neuralnetout(neuralnet) RETURNS cstring','Serialização de neuralnet', [
+            parametroFactory.criar('nn','neuralnet','neuralnet para a ser serializada'),
+          ],[
+            retornoFactory.criar('st','cstring','RNA serializada'),
+          ]),
+          funcaoFactory.criar('pgm_nn_equal', 'pgm_nn_equal(nn1 neuralnet, nn2 neuralnet) RETURNS boolean','Compara se duas neuralnets são iguais', [
+            parametroFactory.criar('nn1','neuralnet','RNA a ser comparada'),
+            parametroFactory.criar('nn2','neuralnet','RNA a ser comparada'),
+          ],[
+            retornoFactory.criar('eq','boolean','True se iguais, caso contrário, False'),
+          ]),
+          funcaoFactory.criar('pgm_nn_evaluate', 'pgm_nn_evaluate(nn neuralnet, vector double precision[]) RETURNS double precision[]','Função que valida a rede para uma determinada entrada.', [
+            parametroFactory.criar('nn1','neuralnet','RNA'),
+            parametroFactory.criar('vector','double precision[]','registro a ser classificado'),
+          ],[
+            retornoFactory.criar('classificacao','double precision[]','Vetor com a probabiblidade de classificacao'),
+          ]),
+          funcaoFactory.criar('pgm_nn_get_distance', 'pgm_nn_get_distance(nna neuralnet, nnb neuralnet) RETURNS double precision','Obtem a distância entre as redes', [
+            parametroFactory.criar('nna','neuralnet','RNA'),
+            parametroFactory.criar('nnb','neuralnet','RNA'),
+          ],[
+            retornoFactory.criar('distancia','double precision','Distância entre as RNAs'),
+          ]),
+          funcaoFactory.criar('pgm_nn_get_mse', 'pgm_nn_get_mse(nn neuralnet) RETURNS double precision','Obtem o erro mínimo quadrado', [
+            parametroFactory.criar('nn','neuralnet','RNA'),
+          ],[
+            retornoFactory.criar('mse','double precision','Erro mínimo quadrado'),
+          ]),
+          funcaoFactory.criar('pgm_nn_get_scaling', 'pgm_nn_get_scaling(nn neuralnet, OUT input_min double precision, OUT input_max double precision, OUT output_min double precision, OUT output_max double precision) ','Obtem as escalas da RNA',  [
+            parametroFactory.criar('nn1','neuralnet','RNA'),
+          ],[
+            retornoFactory.criar('input_min','double precision','Limite mínimo de input'),
+            retornoFactory.criar('input_max','double precision','Limite máximo de input'),
+            retornoFactory.criar('output_min','double precision','Limite mínimo de output'),
+            retornoFactory.criar('output_max','double precision','Limite máximo de output'),
+          ]),
+          funcaoFactory.criar('pgm_nn_get_weight_array', 'pgm_nn_get_weight_array(nn neuralnet, layer integer) RETURNS bigint','Obtem os pesos de uma camada da RNA',  [
+            parametroFactory.criar('nn','neuralnet','RNA'),
+            parametroFactory.criar('layer','integer','camada desejada'),
+          ],[
+            retornoFactory.criar('ptr','bigint','ponteiro para pgm_vector_double com os pesos da camada'),
+          ]),
+          funcaoFactory.criar('pgm_nn_inputsize', 'pgm_nn_inputsize(nn neuralnet) RETURNS integer','Obtem o número de neurônio da primeira camada',  [
+            parametroFactory.criar('nn','neuralnet','RNA'),
+          ],[
+            retornoFactory.criar('inputsize','integer','Número de neurônios'),
+          ]),
+          funcaoFactory.criar('pgm_nn_merge', 'pgm_nn_merge(nna neuralnet, nnb neuralnet) RETURNS neuralnet','Mescla duas RNAs. Condição: nna->OutputMin == 0.0; nna->OutputMax == 1.0; nnb->InputMin == 0.0; nnb->InputMax == 1.0; nna->NLayers + nnb->NLayers - 1 >= 5; nna->NNeurons[nna->NLayers-1] == nnb->NNeurons[0]; nna->FunctionActivation == nnb->FunctionActivation; nna->Bias == nnb->Bias; nna->Steepness == nnb->Steepness', [
+            parametroFactory.criar('nna','neuralnet','RNA'),
+            parametroFactory.criar('nnb','neuralnet','RNA'),
+          ],[
+            retornoFactory.criar('nn','neuralnet','RNAs mescladas'),
+          ]),
+          funcaoFactory.criar('pgm_nn_neuralnet2fann', 'pgm_nn_neuralnet2fann(nn neuralnet) RETURNS bigint','Converte RNA do tipo neuralnet em RNA do tipo fann',  [
+            parametroFactory.criar('nn','neuralnet','RNA'),
+          ],[
+            retornoFactory.criar('fann_ptr','bigint','ponteiro para RNA fann'),
+          ]),
+          funcaoFactory.criar('pgm_nn_nlayers', 'pgm_nn_nlayers(neuralnet) RETURNS integer[]','Número de neurônios por camada',  [
+            parametroFactory.criar('nn','neuralnet','RNA'),
+          ],[
+            retornoFactory.criar('nlayers','integer[]','Número de neurônios por camada'),
+          ]),
+          funcaoFactory.criar('pgm_nn_outputsize', 'pgm_nn_outputsize(nn neuralnet) RETURNS integer','Obtem o número de neurônios da última camada', [
+            parametroFactory.criar('nn','neuralnet','RNA'),
+          ],[
+            retornoFactory.criar('outputsize','integer','Número de neurônios'),
+          ]),
+          funcaoFactory.criar('pgm_nn_set_mse', 'pgm_nn_set_mse(nn neuralnet, new_mse double precision) RETURNS double precision','Troca o MSE(erro mínimo quadrado) de um RNA', [
+            parametroFactory.criar('nn','neuralnet','RNA'),
+            parametroFactory.criar('new_mse','double precision','Novo valor para mse'),
+          ],[
+            retornoFactory.criar('mse','double precision','Novo MSE'),
+          ]),
+          funcaoFactory.criar('pgm_nn_set_scaling', 'pgm_nn_set_scaling(nn neuralnet, input_min double precision, input_max double precision, output_min double precision, output_max double precision) RETURNS neuralnet','descricao', [
+            parametroFactory.criar('nn','neuralnet','RNA'),
+            parametroFactory.criar('input_min','double precision','Novo limite mínimo de input'),
+            parametroFactory.criar('input_max','double precision','Novo limite máximo de input'),
+            parametroFactory.criar('output_min','double precision','Novo limite mínimo de output'),
+            parametroFactory.criar('output_max','double precision','Novo limite máximo de output'),
+          ],[
+            retornoFactory.criar('nn','neuralnet','RNA com as escalas trocadas'),
+          ]),
+          funcaoFactory.criar('pgm_nn_set_weight_array', 'pgm_nn_set_weight_array(nn neuralnet, matrix bigint, layer integer) RETURNS neuralnet','Troca os pesos de uma camada', [
+            parametroFactory.criar('nn','neuralnet','RNA'),
+            parametroFactory.criar('matrix','bigint','Ponteiro para pgm_matrix_double com os novos pesos para camada'),
+            parametroFactory.criar('layer','integer','Camada a ser trocada'),
+          ],[
+            retornoFactory.criar('nn','neuralnet','RNA com as escalas trocadas'),
+          ]),
+          funcaoFactory.criar('pgm_nn_split', 'pgm_nn_split(nn neuralnet, split integer, OUT nn1 neuralnet, OUT nn2 neuralnet) RETURNS record','Função que quebra a rede em 2 partes', [
+            parametroFactory.criar('nn','neuralnet','RNA'),
+            parametroFactory.criar('layer','integer','camada onde será efetuada a cisão'),
+          ],[
+            retornoFactory.criar('nn1','neuralnet','RNA correspondente à primeira parte da RNA anterior'),
+            retornoFactory.criar('nn2','neuralnet','RNA correspondente à segunda parte da RNA anterior'),
+          ]),
+          funcaoFactory.criar('pgm_nn_test', 'pgm_nn_test(matrix_in bigint, matrix_out bigint, nn neuralnet) RETURNS double precision','Efetua teste na RNA com um dado conjunto de entrada',[
+            parametroFactory.criar('matrix_in','bigint','ponteiro para pgm_matrix_double com o conjunto de entrada'),
+            parametroFactory.criar('matrix_out','bigint','ponteiro para pgm_matrix_double com o conjunto de saída'),
+            parametroFactory.criar('nn','neuralnet','RNA'),
+          ],[
+            retornoFactory.criar('accurate','double precision','Acurácia da RNA'),
+          ]),
+        ]
+      }
     ];
   });
 
