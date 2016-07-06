@@ -53,7 +53,7 @@
     </div>
   </div>
 
-  <div class="panel panel-default" ng-if="funcao.funcoes && funcao.funcoes" ng-repeat="func in funcao.funcoes | filter: {nome: queryFuncao}">    
+  <div class="panel panel-default" ng-if="funcao.funcoes && funcao.funcoes" ng-repeat="func in funcao.funcoes | filter: {nome: queryFuncao} | orderBy: 'nome'">    
     <div class="panel-heading">{{func.cabecalho}}</div>
     <div class="panel-body">
       <p>{{func.descricao}}</p>
@@ -84,7 +84,7 @@
           <td width="150"><code>{{ret.tipo}}</code></td>
           <td>{{ret.descricao}}</td>
         </tr>
-        <tr ng-if="!func.ret || !func.retorno.length">
+        <tr ng-if="!func.retorno || !func.retorno.length">
           <td width="5"><span class="glyphicon glyphicon glyphicon-arrow-left" aria-hidden="true"></span></td>
           <td colspan="3"><var>Nenhum</var></td>
         </tr>

@@ -662,7 +662,262 @@
             retornoFactory.criar('nn','bigint','Ponteiro para RNA criada. No formato de neuralnet'),
           ])
         ]
-      }
+      },
+
+      {
+        nome: 'matrix',
+        descricao:'Estrura representa matrix de valores double (pgm_matrix_double)',
+        tipo: {
+          nome: 'matrix',
+          lang: 'pgPL/SQL',
+          campos: [
+            tipoFactory.criar('ptr', 'bigint', 'ponteiro para struct pgm_matrix_double'),
+          ]
+        },
+        operador: [
+          operadorFactory.criar('*', 'matrix', 'opr_matrix_multiply'),
+          operadorFactory.criar('*', 'vector', 'opr_vector_matrix_multiply'),
+          operadorFactory.criar('*', 'double precision[]', 'opr_array_matrix_multiply'),
+          operadorFactory.criar('*', 'double precision', 'opr_matrix_double_multiply'),
+          operadorFactory.criar('+', 'matrix', 'opr_matrix_add'),
+          operadorFactory.criar('-', 'matrix', 'opr_matrix_subtract'),
+          operadorFactory.criar('==>', 'text', 'matrix2table'),
+        ],
+        funcoes: [
+          funcaoFactory.criar('opr_array_matrix_multiply', 'opr_array_matrix_multiply(a double precision[], b matrix, OUT c double precision[]) RETURNS double precision[]','Efetua multiplicação de matrix',[
+            parametroFactory.criar('a','double precision[]','array bidimencional'),
+            parametroFactory.criar('b','double precision[]','array bidimencional'),
+          ],[
+            retornoFactory.criar('c','double precision[]','array bidimencional'),
+          ]),
+          funcaoFactory.criar('opr_matrix_add', 'opr_matrix_add(a matrix, b matrix, OUT c matrix) RETURNS matrix','Soma matricial',[
+            parametroFactory.criar('a','matrix','matriz de valores A'),
+            parametroFactory.criar('b','matrix','matriz de valores B'),
+          ],[
+            retornoFactory.criar('C','matrix','matriz resultante'),
+          ]),
+          funcaoFactory.criar('opr_matrix_double_multiply', 'opr_matrix_double_multiply(a matrix, b double precision, OUT c matrix) RETURNS matrix','Multiplicação de matriz',[
+            parametroFactory.criar('a','matrix','matriz de valores A'),
+            parametroFactory.criar('b','matrix','matriz de valores B'),
+          ],[
+            retornoFactory.criar('C','matrix','matriz resultante'),
+          ]),
+          funcaoFactory.criar('opr_matrix_multiply', 'opr_matrix_multiply(a matrix, b matrix, OUT c matrix) RETURNS matrix','Multiplicação de matriz',[
+            parametroFactory.criar('a','matrix','matriz de valores A'),
+            parametroFactory.criar('b','matrix','matriz de valores B'),
+          ],[
+            retornoFactory.criar('C','matrix','matriz resultante'),
+          ]),
+          funcaoFactory.criar('opr_matrix_subtract', 'opr_matrix_subtract(a matrix, b matrix, OUT c matrix) RETURNS matrix','Subtração de matriz',[
+            parametroFactory.criar('a','matrix','matriz de valores A'),
+            parametroFactory.criar('b','matrix','matriz de valores B'),
+          ],[
+            retornoFactory.criar('C','matrix','matriz resultante'),
+          ]),
+          funcaoFactory.criar('pgm_array2matrix','pgm_array2matrix(bidimensional_array double precision[]) RETURNS bigint','Converte array bidimencional em ponteiro para pgm_matrix_double',[
+            parametroFactory.criar('bidimensional_array','double precision[]','array bidimencional'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ]),
+          funcaoFactory.criar('pgm_array2matrix_int','pgm_array2matrix_int(value integer[])','Converte array bidimencional em ponteiro para pgm_matrix_int',[
+            parametroFactory.criar('value','integer[]','array bidimencional'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_int'),
+          ]),
+          funcaoFactory.criar('pgm_array2matrix_float','pgm_array2matrix_float(value real[]) RETURNS bigint','Converte array bidimencional para ponteiro para pgm_matrix_double',[
+            parametroFactory.criar('value','real[]','array bidimencional'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ]),
+          funcaoFactory.criar('pgm_matrix2array','pgm_matrix2array(matrix bigint) RETURNS double precision[]','Converte ponteiro para pgm_matrix_double para array bi-dimencional',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('array','double precision[]','array bidimencional'),
+          ]),
+          funcaoFactory.criar('pgm_matrix2array','pgm_matrix2array(a matrix) RETURNS double precision[]','Converte matrix em array bi-dimencional',[,
+            parametroFactory.criar('a','matrix','array bidimencional'),
+          ],[
+            retornoFactory.criar('c','double precision[]','array bidimencional'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_add','pgm_matrix_add(matrix_a bigint, matrix_b bigint) RETURNS bigint','Soma de matrizes',[
+            parametroFactory.criar('a','bigint','ponteiro para pgm_matrix_double A'),
+            parametroFactory.criar('b','bigint','ponteiro para pgm_matrix_double B'),
+          ],[
+            retornoFactory.criar('c','bigint','ponteiro para pgm_matrix_double'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_apply_inverse_sigmoid','pgm_matrix_apply_inverse_sigmoid(matrix bigint) RETURNS bigint','Aplica a função inversa da sigmoid. Inversa da sigmoid: -log( 2.0/(x+1.0) -1.0)/16.0',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('c','double precision[]','ponteiro para pgm_matrix_double'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_apply_scale','pgm_matrix_apply_scale(m bigint, scale double precision) RETURNS bigint','Aplica escala na matriz',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('scale','double precision','escala'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro de pgm_matrix_double com a escala aplicado'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_apply_sigmoid','pgm_matrix_apply_sigmoid(matrix bigint) RETURNS bigint','Aplica função sigmoid na matriz',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double resultante'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_copy','pgm_matrix_copy(matrix bigint) RETURNS bigint','Copia um matriz',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double copiado'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_create','pgm_matrix_create(n_lines integer, n_cols integer) RETURNS bigint','',[
+            parametroFactory.criar('n_lines','integer','número de linhas'),
+            parametroFactory.criar('n_cols','integer','número de colunas'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_double_multiply','pgm_matrix_double_multiply(a bigint, b double precision, OUT c bigint) RETURNS bigint','Multiplicação de matrizes. C = AxB',[
+            parametroFactory.criar('A','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('B','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('C','bigint','ponteiro para pgm_matrix_double'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_float2array','pgm_matrix_float2array(matrix bigint) RETURNS real[]','Converte pgm_matrix_float para array bi-dimencional',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('array','double precision[]','array bidimencional'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_float_create','pgm_matrix_float_create(n_lines integer, n_cols integer) RETURNS bigint','Cria um pgm_matrix_float',[
+            parametroFactory.criar('n_lines','integer','número de linhas'),
+            parametroFactory.criar('n_cols','integer','número de colunas'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_float'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_float_set_elem','pgm_matrix_float_set_elem(matrix bigint, line integer, col integer, value double precision) RETURNS bigint','Troca o valor de um elemento da matriz',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_float'),
+            parametroFactory.criar('line','integer','índice da linha da matrix'),
+            parametroFactory.criar('col','integer','índice da coluna da matrix'),
+            parametroFactory.criar('value','double precision','valor a ser setado'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_float com valor setado'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_free','pgm_matrix_free(matrix bigint) RETURNS void','Desaloca um pgm_matrix_double',[
+            parametroFactory.criar('a','bigint','ponteiro para pgm_matrix_double'),
+          ],[]),
+          funcaoFactory.criar('pgm_matrix_get','pgm_matrix_get(matrix bigint) RETURNS double precision[]','Converte pgm_matrix_double para array bi-dimencional',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('array','double precision[]','array bidimencional'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_get_col','pgm_matrix_get_col(matrix bigint, col integer) RETURNS double precision[]','Obtem os valores de uma coluna.',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('col','integer','número da coluna'),
+          ],[
+            retornoFactory.criar('coluna','double precision[]','array uni-dimencional'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_get_elem','pgm_matrix_get_elem(matrix bigint, line integer, col integer) RETURNS double precision','Obtem valor de um elemento da matriz',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('line','integer','índice da linha'),
+            parametroFactory.criar('col','integer','índice da coluna'),
+          ],[
+            retornoFactory.criar('elemento','double precision','valor do elemento'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_get_line','pgm_matrix_get_line(matrix bigint, line integer) RETURNS double precision[]','Obtem os valores da uma linha da matriz',[
+            parametroFactory.criar('a','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('line','integer','índice da linha'),
+          ],[
+            retornoFactory.criar('c','double precision[]','array bidimencional'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_get_min_max_mean','pgm_matrix_get_min_max_mean(matrix bigint, OUT min double precision, OUT max double precision, OUT mean double precision) RETURNS record','Retorna o valor máximo, mínimo e a média dos elementos da matriz',[
+            parametroFactory.criar('a','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('mínimo','double precision','valor mínimo da matriz'),
+            retornoFactory.criar('máximo','double precision','valor máximo da matriz'),
+            retornoFactory.criar('média','double precision','valor média da matriz'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_inverse','pgm_matrix_inverse(matrix bigint) RETURNS bigint','Inverte a matriz',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('matrix_inverse','bigint','ponteiro para pgm_matrix_double invertida'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_multiply','pgm_matrix_multiply(matrix_a bigint, matrix_b bigint) RETURNS bigint','Multiplicação de matriz. C = A x B',[
+            parametroFactory.criar('A','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('B','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('C','bigint','ponteiro para pgm_matrix_double'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_ncols','pgm_matrix_ncols(matrix bigint) RETURNS integer','Obtem o número de colunas de uma matriz',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('n_cols','integer','número de colunas da matriz'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_nlines','pgm_matrix_nlines(matrix bigint) RETURNS integer','Obtem o número de linhas de uma matriz',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('n_lines','integer','número de linhas da matriz'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_norm','pgm_matrix_norm(matrix bigint) RETURNS double precision','Calcula a norma da matriz',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('norm','double precision','norma da matrix'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_set_col_value','pgm_matrix_set_col_value(m bigint, col integer, value double precision) RETURNS bigint','Seta o valor de todos os elementos da coluna com value',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('col','integer','índice da coluna'),
+            parametroFactory.criar('value','double precision','valor a ser setado'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double resultante'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_set_elem','pgm_matrix_set_elem(matrix bigint, line integer, col integer, value double precision) RETURNS bigint','',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('line','integer','índice da linha'),
+            parametroFactory.criar('col','integer','índice da coluna'),
+            parametroFactory.criar('value','bigint','valor a ser setado'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double resultante'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_set_line','pgm_matrix_set_line(matrix bigint, line integer, valor double precision[]) RETURNS bigint','Seta o valor de todos os elementos de uma linha',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('line','integer','índice da linha'),
+            parametroFactory.criar('valor','double precision[]','novo valor da linha'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double resultante'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_set_line_value','pgm_matrix_set_line_value(m bigint, line integer, value double precision) RETURNS bigint','Seta o valor de todos os elementos de uma linha',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('line','integer','índice da linha'),
+            parametroFactory.criar('valor','double precision','novo valor da linha'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double resultante'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_set_value','pgm_matrix_set_value(m bigint, value double precision) RETURNS bigint','Seta todos os valores da matriz',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('valor','double precision','novo valor'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double resultante'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_subtract','pgm_matrix_subtract(matrix_a bigint, matrix_b bigint) RETURNS bigint','Subtração de matrizes',[
+            parametroFactory.criar('matrix_a','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('matrix_b','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('matrix_r','bigint','ponteiro para pgm_matrix_double resultante. R = A - B'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_transpose','pgm_matrix_transpose(matrix bigint) RETURNS bigint','Transpõe a matrix',[
+            parametroFactory.criar('a','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double transposta'),
+          ]),
+          funcaoFactory.criar('pgm_matrix_int2array','pgm_matrix_int2array(matrix bigint)','Converte ponteiro para pgm_matrix_int para array bi-dimencional',[
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('array','integer[]','array de valores'),
+          ]),
+          funcaoFactory.criar('pgm_weighted_mean','pgm_weighted_mean(matrix_a bigint, p double precision, matrix_b bigint, q double precision) RETURNS bigint','Média ponderada entre as matrizes. C(i,j) = (A(i,j) * P + B(i,j) * Q))/(P+Q)',[
+            parametroFactory.criar('A','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('P','double precision','peso da matriz A'),
+            parametroFactory.criar('B','bigint','ponteiro para pgm_matrix_double'),
+            parametroFactory.criar('Q','double precision','peso da matriz B'),
+          ],[
+            retornoFactory.criar('C','bigint','ponteiro para pgm_matrix_double resultante'),
+          ]),
+        ]
+      },
     ];
 
     $scope.lista = setup(listaFuncoes);
