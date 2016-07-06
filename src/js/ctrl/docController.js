@@ -16,6 +16,21 @@
 
     var listaFuncoes = [
       {
+        nome: 'prepare_data_to_learn',
+        descricao:'Cria tabela temporária com valores organizados para treinamento, já normalizado. OBS: a saída é sempre normalizada no intervalo (tol, 1-tol), exceto se tol >= 0.5 (nesse caso não há normalização da saída). Se min >= max, não há normalização da entrada. Veja create_nn.',
+        cabecalho:'prepare_data_to_learn(sql text, nome_tabela text, k_folds integer DEFAULT 5, keep_col_ratio boolean DEFAULT true, min_e double precision DEFAULT (-1), max_e double precision DEFAULT 1, tol double precision DEFAULT 0.001) RETURNS bigint',
+        parametros: [
+          parametroFactory.criar('sql', 'text', "SQL eh uma consulta de um dos dois tipos a seguir, representando uma classificação ou uma regressão: 1) Classificação: 'select id, entrada, classe from tabela' Ex: 'select id, array[ petal_w, sepal_w, petal_l, sepal_l ] entrada, classe from iris' classe pode ser integer ou text, e será convertido para uma representação vetorial do tipo (0,1,0,0,0); 2) Regressão: 'select id, entrada, saida from tabela' Ex: 'select x*100+y id, array[ x, y ] entrada, array[ x*y ] saida from generate_series( 1, 10 ) x, generate_series( 1, 10 ) y'"),
+          parametroFactory.criar('nome_tabela', 'text', 'nome da tabela a ser criada, contendo as seguintes colunas: id, fold, entrada, saida'),
+          parametroFactory.criar('k_folds', 'integer', 'número de folds na tabela a ser criada; default 5'),
+          parametroFactory.criar('keep_col_ratio', 'boolean', 'define se a normalização manterá a razão entre as colunas; default true'),
+          parametroFactory.criar('min_e,max_e,tol', 'double precision', 'normalização da entrada no intervalo (min+tol, max-tol)'),
+        ],
+        retorno:[
+          retornoFactory.criar('nlines', 'bigint', 'número de linhas criadas')
+        ]
+      },
+      {
         nome: 'apply_inverse_sigmoid',
         descricao:'Aplica a função inversa da sigmoid sobre cada elemento x 1da matriz m. Inversa da sigmoid: -log( 2.0/(x+1.0) -1.0)/16.0',
         cabecalho:'apply_inverse_sigmoid(in m matrix, out c matrix) RETURNS matrix',
@@ -915,6 +930,154 @@
             parametroFactory.criar('Q','double precision','peso da matriz B'),
           ],[
             retornoFactory.criar('C','bigint','ponteiro para pgm_matrix_double resultante'),
+          ]),
+        ]
+      },
+
+      {
+        nome: 'vector',
+        descricao:'Estrutura para ponteiro de pgm_vector_double',
+        tipo: {
+          nome: 'vector',
+          lang: 'pgPL/SQL',
+          campos: [
+            tipoFactory.criar('ptr', 'bigint', 'ponteiro para pgm_vector_double'),
+          ]
+        },
+        operador: [
+          operadorFactory.criar('*','double precision * double precision[]','pgm_scale_vector'),
+          operadorFactory.criar('*','double precision[] * double precision','pgm_scale_vector'),
+          operadorFactory.criar('*','double precision[] * double precision[]','pgm_vector_vector'),
+          operadorFactory.criar('+','double precision[] + double precision','opr_sum_vector_float'),
+          operadorFactory.criar('+','double precision + double precision[]','opr_sum_float_vector'),
+          operadorFactory.criar('+','double precision[] + double precision[]', 'opr_sum_vector_vector'),
+          operadorFactory.criar('-','double precision[] - double precision[]', 'pgm_vector_distance'),
+          operadorFactory.criar('-','double precision[] - double precision', 'opr_sub_vector_float'),
+          operadorFactory.criar('-','double precision - double precision[]', 'opr_sub_float_vector'),
+          operadorFactory.criar('/','double precision[] / double precision[]', 'opr_div_vector_vector'),
+          operadorFactory.criar('/','double precision / double precision[]', 'opr_div_float_vector'),
+          operadorFactory.criar('*','vector * matrix','opr_vector_matrix_multiply'),
+          operadorFactory.criar('==>','vector ==> text','vector2table'),
+        ],
+        funcoes: [
+          funcaoFactory.criar('pgm_vector_distance','pgm_vector_distance(a double precision[], b double precision[]) RETURNS double precision[]','Distancia entre vetores',[
+            parametroFactory.criar('a','double presicion[]','array uni-dimencional'),
+            parametroFactory.criar('b','double presicion[]','array uni-dimencional'),
+          ],[
+            retornoFactory.criar('distance','double precision[]','vetor distancia'),
+          ]),
+          funcaoFactory.criar('pgm_vector_double2array','pgm_vector_double2array(vector bigint) RETURNS double precision[]','Converte pgm_vector_double em array uni-dimencional',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_double'),
+          ],[
+            retornoFactory.criar('array','double precision[]','array uni-dimensional'),
+          ]),
+          funcaoFactory.criar('pgm_vector_double2array','pgm_vector_double2array(a vector) RETURNS double precision[]','Converte vector em array uni-dimensional',[
+            parametroFactory.criar('vector','vector','vetor'),
+          ],[
+            retornoFactory.criar('array','double precision[]','array uni-dimensional'),
+          ]),
+          funcaoFactory.criar('pgm_vector_double_copy','pgm_vector_double_copy(vector bigint) RETURNS bigint','Copia um pgm_vector_double',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_double'),
+          ],[
+            retornoFactory.criar('vector_c','bigint','ponteiro para pgm_vector_double copiado'),
+          ]),
+          funcaoFactory.criar('pgm_vector_double_create','pgm_vector_double_create(n_elem integer) RETURNS bigint','Cria um pgm_vector_double',[
+            parametroFactory.criar('n_elem','integer','número de elementos do pgm_vetor_double'),
+          ],[
+            retornoFactory.criar('vector','bigint','ponteiro para pgm_vector_double criado'),
+          ]),
+          funcaoFactory.criar('pgm_vector_double_free','pgm_vector_double_free(vector bigint) RETURNS void','Libera memória do pgm_vector_double',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_double'),
+          ],[]),
+          funcaoFactory.criar('pgm_vector_double_get','pgm_vector_double_get(vector bigint) RETURNS double precision[]','Converte pgm_vector_double para array uni-dimensional',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_double'),
+          ],[
+            retornoFactory.criar('array','double precision[]','array uni-dimensional'),
+          ]),
+          funcaoFactory.criar('pgm_vector_double_get_elem','pgm_vector_double_get_elem(vector bigint, pos integer) RETURNS double precision','Obtem o valor do elemento do vetor',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_double'),
+            parametroFactory.criar('pos','integer','índice do vetor'),
+          ],[
+            retornoFactory.criar('elemento','double precision','valor do elemento. V(pos)'),
+          ]),
+          funcaoFactory.criar('pgm_vector_double_matrix_multiply','pgm_vector_double_matrix_multiply(vector bigint, matrix bigint) RETURNS bigint','Multiplica vetor com matriz',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_double'),
+            parametroFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ],[
+            retornoFactory.criar('matrix','bigint','ponteiro para pgm_matrix_double'),
+          ]),
+          funcaoFactory.criar('pgm_vector_double_nlines','pgm_vector_double_nlines(vector bigint) RETURNS integer','Obtem o número de elementos de um vetor',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_double'),
+          ],[
+            retornoFactory.criar('n_elems','integer','Número de elementos do vector'),
+          ]),
+          funcaoFactory.criar('pgm_vector_double_set_elem','pgm_vector_double_set_elem(vector bigint, pos integer, val double precision) RETURNS bigint','Seta o valor do vetor',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_double'),
+            parametroFactory.criar('pos','integer','índice do vetor'),
+            parametroFactory.criar('valor','double precision','novo valor'),
+          ],[
+            retornoFactory.criar('vector','bigint','ponteiro para pgm_vector_double'),
+          ]),
+          funcaoFactory.criar('pgm_vector_int2array','pgm_vector_int2array(vector bigint) RETURNS integer[]','Converte vetor pgm_vector_int para array uni-dimencional',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_int'),
+          ],[
+            retornoFactory.criar('array','integer[]','array uni-dimensional'),
+          ]),
+          funcaoFactory.criar('pgm_vector_int_create','pgm_vector_int_create(n_elems integer) RETURNS bigint','cria pgm_vector_int',[
+            parametroFactory.criar('n_elems','integer','número de elementos do vetor'),
+          ],[
+            retornoFactory.criar('vector','bigint','ponteiro para pgm_vector_int'),
+          ]),
+          funcaoFactory.criar('pgm_vector_int_free','pgm_vector_int_free(vector bigint) RETURNS void','libera memória do pgm_vector_int',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_int'),
+          ],[]),
+          funcaoFactory.criar('pgm_vector_int_get','pgm_vector_int_get(vector bigint) RETURNS integer[]','Converte vetor pgm_vector_int para array uni-dimencional',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_int'),
+          ],[
+            retornoFactory.criar('array','integer[]','array uni-dimensional'),
+          ]),
+          funcaoFactory.criar('pgm_vector_int_get_elem','pgm_vector_int_get_elem(vetor bigint, posicao integer) RETURNS integer','Obtem o valor de uma posição do vetor',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_int'),
+          ],[
+            retornoFactory.criar('elemento','integer','valor do elemento na posição pos. V(i)'),
+          ]),
+          funcaoFactory.criar('pgm_vector_int_nlines','pgm_vector_int_nlines(vetor bigint) RETURNS integer','Retorna o número de elementos do vetor',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_int'),
+          ],[
+            retornoFactory.criar('nlines','integer','Número de elementos do vetor'),
+          ]),
+          funcaoFactory.criar('pgm_vector_int_set_elem','pgm_vector_int_set_elem(vector bigint, pos integer, val integer) RETURNS bigint','Seta o valor de um elemento do vetor',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_int'),
+            parametroFactory.criar('pos','integer','índice do elemento'),
+            parametroFactory.criar('val','integer','novo valor'),
+          ],[
+            retornoFactory.criar('vector','bigint','ponteiro para pgm_vector_int'),
+          ]),
+          funcaoFactory.criar('pgm_vector_norm','pgm_vector_norm(vector bigint) RETURNS double precision','Calcula a norma do vetor',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_double'),
+          ],[
+            retornoFactory.criar('norm','double precision','Norma do vetor'),
+          ]),
+          funcaoFactory.criar('pgm_vector_vector','pgm_vector_vector(a double precision[], b double precision[]) RETURNS double precision[]','C é dado por: Para cada elemento é em A é multiplicado por cada elemento em B.',[
+            parametroFactory.criar('A','double precision[]','array uni-dimensional'),
+            parametroFactory.criar('B','double precision[]','array uni-dimensional'),
+          ],[
+            retornoFactory.criar('vector_vector','double precision[]','array resultante'),
+          ]),
+          funcaoFactory.criar('pgm_vectorint2array','pgm_vectorint2array(vector bigint) RETURNS integer[]','Converte um pgm_vetor_int para array uni-dimensional',[
+            parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_int'),
+          ],[
+            retornoFactory.criar('array','integer[]','array uni-dimensional'),
+          ]),
+          funcaoFactory.criar('pgm_array2vector_double','pgm_array2vector_double(unidimensional_array double precision[]) RETURNS bigint','Converte array uni-dimensional para pgm_vector_double',[
+            parametroFactory.criar('unidimensional_array','double precision[]','array uni-dimensional'),
+          ],[
+            retornoFactory.criar('vector','bigint','ponteiro para pgm_vector_double'),
+          ]),
+          funcaoFactory.criar('pgm_array2vector_int','pgm_array2vector_int(unidimensional_array integer[]) RETURNS bigint','Converte array uni-dimensional para pgm_vector_int',[
+            parametroFactory.criar('unidimensional_array','integer[]','array uni-dimensional'),
+          ],[
+            retornoFactory.criar('vector','bigint','ponteiro para pgm_vector_integer'),
           ]),
         ]
       },
