@@ -19,18 +19,17 @@ destroy:
 	sudo docker rm -f $(CONTAINERNAME)
 
 deploy:
-	sudo docker exec $(CONTAINERNAME) make deploy
+	sudo docker exec $(CONTAINERNAME) make install
 	sudo docker restart $(CONTAINERNAME)
 
 dist: deploy
 	rm -f pgminer*.tar.gz
 	mkdir -p pgminer
-	cp src/bin/pgminer.so pgminer
+	cp src/pgminer/pgminer.so pgminer
 	cp -r src/lapacke/ pgminer
-	cp src/sql/extension.pgminer.sql pgminer
-	chmod +x install.sh
-	cp install.sh pgminer
-	tar -zcvf pgminer_$(shell date +%s)_$(DIST).tar.gz pgminer/*
+	cp src/pgminer/pgminer--0.0.1.sql pgminer
+	cp install.mk pgminer/Makefile
+	tar -zcvf pgminer_$(shell date +%s)_$(DIST)_0.0.1.tar.gz pgminer/*
 	rm -rf pgminer
 
 %.o:

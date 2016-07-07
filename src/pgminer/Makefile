@@ -1,7 +1,18 @@
+##############################################################
+###################### EXTENSION CONFIG ######################
+##############################################################
+EXTENSION = pgminer        # the extensions name
+DATA = pgminer--0.0.1.sql  # script files to install
 MODULES = pgminer
+
 PG_CONFIG = pg_config
 PGXS = $(shell $(PG_CONFIG) --pgxs)
 INCLUDEDIR = $(shell $(PG_CONFIG) --includedir-server)
+include $(PGXS)
+
+###############################################################
+######################## COMPILE VARS #########################
+###############################################################
 SRC_FANN = ../fann/src
 INC_FANN = ../fann/src/include
 OBJ_PATH = ../bin/obj
@@ -24,22 +35,26 @@ C45 = pgm_c45.o pure_c_c4.5.o besttree.o build.o info.o discr.o contin.o subset.
 #CUDA_INC_FLAG = -I$(CUDA_INC_PATH) -I/usr/local/cuda-5.0/samples/common/inc/
 #CUDA_CFLAGS = -g -O2 -fPIC -DLINUX_OOM_ADJ=0 -fPIC -DLINUX_OOM_ADJ=0 -Wall -Wpointer-arith -Wendif-labels -Wformat-security -fno-strict-aliasing -fwrapv -g -fpic
 
-include $(PGXS)
 
+##############################################################
+########################## TARGETS ###########################
+##############################################################
 all: pgminer.so
+
+install: all
 
 Clear:
 	rm -rf ../bin
-
-deploy: all
-	rm -f /usr/lib/postgresql/$(VERSIONPG)/lib/pgminer.so
-	cp ../bin/pgminer.so /usr/lib/postgresql/$(VERSIONPG)/lib/
+	rm -f pgminer.so
 
 createBinFolder:
 	mkdir -p ../bin/obj
 
+##############################################################
+########################## COMPILE ###########################
+##############################################################
 pgminer.so: createBinFolder $(OBJ)
-	gcc -shared -o ../bin/pgminer.so $(OBJ) $(LAPACK_LIB) -lm -g
+	gcc -shared -o pgminer.so $(OBJ) $(LAPACK_LIB) -lm -g
 
 $(OBJ_PATH)/pgm_matriz.o: createBinFolder ../Util/pgm_matriz.c
 	cc -o $@ -c ../Util/pgm_matriz.c $(MORECFLAGS) $(CFLAGS) -I$(INCLUDEDIR)
