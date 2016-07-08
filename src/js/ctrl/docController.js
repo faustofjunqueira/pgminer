@@ -1058,11 +1058,11 @@
           ],[
             retornoFactory.criar('norm','double precision','Norma do vetor'),
           ]),
-          funcaoFactory.criar('pgm_vector_vector','pgm_vector_vector(a double precision[], b double precision[]) RETURNS double precision[]','C é dado por: Para cada elemento é em A é multiplicado por cada elemento em B.',[
+          funcaoFactory.criar('pgm_vector_vector','pgm_vector_vector(a double precision[], b double precision[]) RETURNS double precision[]','Retorna um array onde é C[i] = A[i] * B[i]',[
             parametroFactory.criar('A','double precision[]','array uni-dimensional'),
             parametroFactory.criar('B','double precision[]','array uni-dimensional'),
           ],[
-            retornoFactory.criar('vector_vector','double precision[]','array resultante'),
+            retornoFactory.criar('vector_vector','double precision[]','array resultante C'),
           ]),
           funcaoFactory.criar('pgm_vectorint2array','pgm_vectorint2array(vector bigint) RETURNS integer[]','Converte um pgm_vetor_int para array uni-dimensional',[
             parametroFactory.criar('vector','bigint','ponteiro para pgm_vector_int'),
