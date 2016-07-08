@@ -1,3 +1,5 @@
+VERSIONPG=9.4
+
 EXTENSION = pgminer        # the extensions name
 DATA = pgminer--0.0.1.sql  # script files to install
 MODULES = pgminer
@@ -7,7 +9,6 @@ PGXS = $(shell $(PG_CONFIG) --pgxs)
 INCLUDEDIR = $(shell $(PG_CONFIG) --includedir-server)
 include $(PGXS)
 
-VERSIONPG=9.4
 
 install: all
 
@@ -17,4 +18,4 @@ all:
 	echo "Instalando o Lapacke..."
 	cp -r lapacke/ /usr/include/
 	echo "Instalando o Pgminer..."
-	cp pgminer.so /usr/lib/postgresql/$VERSIONPG/lib/
+	cp pgminer.so /usr/lib/postgresql/$(VERSIONPG)/lib/
