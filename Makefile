@@ -29,6 +29,7 @@ dist: deploy
 	cp src/pgminer/pgminer.control pgminer
 	cp -r src/lapacke/ pgminer
 	cp src/pgminer/pgminer--0.0.1.sql pgminer
+	cp README.md pgminer
 	cp install.mk pgminer/Makefile
 	tar -zcvf pgminer_$(shell date +%s)_$(DIST)_0.0.1.tar.gz pgminer/*
 	rm -rf pgminer
