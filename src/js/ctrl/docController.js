@@ -124,11 +124,14 @@
       {
         nome: 'create_nn',
         descricao:'Função cria um RNA baseada na neuralnet',
-        cabecalho:'create_nn(table_data text, hidden integer[], functionActivation integer DEFAULT 3, steepness float default 0.01, validation_fold integer default 1, test_fold integer default 1, max_epochs integer default 500, epochs_between_report integer default 10, OUT nn neuralnet, OUT mse_report double precision[]) RETURNS record',
+        cabecalho:[
+          'create_nn(table_data text, hidden integer[], functionActivation integer DEFAULT 3, steepness float default 0.01, validation_fold integer default 1, test_fold integer default 1, max_epochs integer default 500, epochs_between_report integer default 10, OUT nn neuralnet, OUT mse_report double precision[]) RETURNS record',
+          'create_nn(table_data text, hidden integer[], functionActivation text, steepness float default 0.01, validation_fold integer default 1, test_fold integer default 1, max_epochs integer default 500, epochs_between_report integer default 10, OUT nn neuralnet, OUT mse_report double precision[]) RETURNS record'
+        ],
         parametros: [
           parametroFactory.criar('table_data', 'text','Deve ser uma tabela preparada por prepare_data_to_learn, tendo as colunas id, fold, entrada, saida, com entrada e saida normalizadas.'),
           parametroFactory.criar('hidden', 'integer[]','array com o número de neurônios das camadas intermediárias(hdden layers)'),
-          parametroFactory.criar('functionActivation', 'integer', 'Função de ativação. Veja todos os valores em Função de Ativação: default: 3 (NN_SIGMOID)'),
+          parametroFactory.criar('functionActivation', 'integer|text', 'Função de ativação. Pode ser utilizado o nome ou o valor. Veja todos os valores em Função de Ativação: (0) NN_LINEAR, (1) NN_THRESHOLD, (2) NN_THRESHOLD_SYMMETRIC, (3) NN_SIGMOID, (4) NN_SIGMOID_STEPWISE, (5) NN_SIGMOID_SYMMETRIC, (6) NN_SIGMOID_SYMMETRIC_STEPWISE, (7) NN_GAUSSIAN, (8) NN_GAUSSIAN_SYMMETRIC, (9) NN_GAUSSIAN_STEPWISE, (10) NN_ELLIOT, (11) NN_ELLIOT_SYMMETRIC, (12) NN_LINEAR_PIECE, (13) NN_LINEAR_PIECE_SYMMETRIC, (14) NN_SIN_SYMMETRIC, (15) NN_COS_SYMMETRIC, (16) NN_SIN, (17) NN_COS, (18) NN_BIHIPERBOLIC'),
           parametroFactory.criar('steepness', 'float', 'valor do steepness. default: 0.01' ),
           parametroFactory.criar('validation_fold', 'integer', 'fold de validação. default: 1' ),
           parametroFactory.criar('test_fold', 'integer', 'fold de teste. default: 1' ),
