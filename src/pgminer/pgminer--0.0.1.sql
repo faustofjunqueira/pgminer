@@ -5188,3 +5188,22 @@ CREATE OR REPLACE FUNCTION pgm_som(data bigint, neuronios bigint,Dstart integer,
 '$libdir/pgminer.so', 'pgm_som'
   LANGUAGE c VOLATILE STRICT
   COST 1;
+
+CREATE OR REPLACE FUNCTION pgm_nn_string2functionActivation(functionActivationName cstring)
+  RETURNS integer AS
+'$libdir/pgminer.so', 'pgm_nn_string2functionActivation'
+  LANGUAGE c VOLATILE STRICT
+  COST 1;
+
+CREATE OR REPLACE FUNCTION create_nn(table_data text, hidden integer[], functionActivationName TEXT, steepness float default 0.01, validation_fold integer default 1, test_fold integer default 1, max_epochs integer default 500, epochs_between_report integer default 10, OUT nn neuralnet, OUT mse_report double precision[]) RETURNS record
+    LANGUAGE plpgsql STABLE COST 1000
+    AS $$
+-- table_data deve ser uma tabela preparada por prepare_data_to_learn, tendo as colunas id, fold, entrada, saida, com entrada e saida normalizadas.
+DECLARE
+  result record;
+BEGIN
+  result := create_nn(table_data, hidden, pgm_nn_string2functionActivation(cast(functionActivationName as cstring)),steepness,validation_fold,test_fold,max_epochs,epochs_between_report);
+  nn := result.nn;
+  mse_report := result.mse_report;
+END;
+$$;

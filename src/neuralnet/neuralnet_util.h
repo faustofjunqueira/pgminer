@@ -72,4 +72,10 @@ char nn_NeuralNetEqual(NeuralNet *NeuralA,NeuralNet *NeuralB);
 Função que pega a distancia entre duas redes
 */
 double nn_GetDistance(NeuralNet *nnA, NeuralNet *nnB);
+
+/*
+Função converte o nome da função para seu índice
+*/
+short nn_GetFunctionActivationByName(char *st);
 #endif
+

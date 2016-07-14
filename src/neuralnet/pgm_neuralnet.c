@@ -372,6 +372,7 @@ PG_FUNCTION_INFO_V1(pgm_train_neuralnet1);
 Datum pgm_train_neuralnet1(PG_FUNCTION_ARGS);
 
 Datum pgm_train_neuralnet1(PG_FUNCTION_ARGS){
+
 	struct fann_train_data *data;
 	PGM_Vetor_Int     *hidden    = pgm_ArrayType2PGM_Vetor_Int(PG_GETARG_ARRAYTYPE_P(1));
 	double steepness =  PG_GETARG_FLOAT8(3);
@@ -608,3 +609,25 @@ Datum pgm_nn_info(PG_FUNCTION_ARGS){
     nn_NeuralNetInfo((NeuralNet*) PG_GETARG_POINTER(0));
     PG_RETURN_VOID();
 }
+
+PG_FUNCTION_INFO_V1(pgm_nn_string2functionActivation);
+Datum pgm_nn_string2functionActivation(PG_FUNCTION_ARGS);
+
+Datum pgm_nn_string2functionActivation(PG_FUNCTION_ARGS){
+    char *functionActivationText = PG_GETARG_CSTRING(0);
+    short functionActivation = -1;
+    if(!functionActivationText){
+        elog(ERROR,"Por favor, insira um nome de função");
+    }
+    if((functionActivation =  nn_GetFunctionActivationByName(functionActivationText)) < 0){
+        int i;
+        elog(INFO,"Nome ínválido de função (%s)", functionActivationText);
+        elog(INFO,"Use:");
+        for(i = 0; i < NN_FUNCTION_ACTIVATION; i++)
+            elog(INFO,"%s",NN_ACTIVATIONFUNC_NAMES[i]);
+        elog(ERROR,"Escolha umas das opções acima");
+    }
+    PG_RETURN_INT32(functionActivation);
+}
+
+    

@@ -287,3 +287,15 @@ double nn_GetDistance(NeuralNet *nnA, NeuralNet *nnB){
 	}
 	return sqrt(result);
 }
+
+short nn_GetFunctionActivationByName(char *st){
+	if(st){
+      short i;
+      for(i = 0; i < NN_FUNCTION_ACTIVATION; i++){
+      	if(!strcmp(st,NN_ACTIVATIONFUNC_NAMES[i])){
+      		return i;
+      	}
+      }
+	}
+	return -1;
+}
