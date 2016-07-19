@@ -888,11 +888,11 @@ BEGIN
 
   PERFORM pgm_nn_fann_train( trainData, FANN, max_epochs, epochs_between_report, 0.00001 );
 
-  mse_report := ARRAY[ 0.0 ];
+  mse_report := ARRAY[ pgm_nn_fann_test( trainData, FANN ), pgm_nn_fann_test( validationData, FANN ), pgm_nn_fann_test( testData, FANN ) ];
 
-  NN := pgm_nn_fann2neuralnet( FANN );
+  NN := pgm_nn_fann2neuralnet( FANN ); 
 
-  RAISE INFO 'MSE: % / % / %', pgm_nn_fann_test( trainData, FANN ), pgm_nn_fann_test( validationData, FANN ), pgm_nn_fann_test( testData, FANN );
+  RAISE INFO 'MSE: % ', mse_report;
 
   PERFORM pgm_nn_fann_free_train_data( testData );
   PERFORM pgm_nn_fann_free_train_data( validationData );
@@ -5207,3 +5207,9 @@ BEGIN
   mse_report := result.mse_report;
 END;
 $$;
+
+CREATE OR REPLACE FUNCTION pgm_nn_info(nn neuralnet)
+  RETURNS integer AS
+'$libdir/pgminer.so', 'pgm_nn_info'
+  LANGUAGE c VOLATILE STRICT
+  COST 1;

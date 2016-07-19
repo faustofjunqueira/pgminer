@@ -60,10 +60,10 @@ double *nn_fann_parse_get_weights(struct fann *ANN, unsigned int NLayers, unsign
 }
 
 void nn_fann_parse_fann_set_scaling_default(struct fann* ann){
-	ann->input_min = 0.0;
-	ann->input_max = 1.0;
-	ann->output_min = -1.0;
-	ann->output_max = 1.0;
+	ann->input_min = INPUT_MIN_DEFAULT_VALUE;
+	ann->input_max = INPUT_MAX_DEFAULT_VALUE;
+	ann->output_min = OUTPUT_MIN_DEFAULT_VALUE;
+	ann->output_max = OUTPUT_MAX_DEFAULT_VALUE;
 }
 
 void nn_fann_parse_nn_get_connection2( int n_layers, int *n_neurons, struct fann_connection *connections_nn){

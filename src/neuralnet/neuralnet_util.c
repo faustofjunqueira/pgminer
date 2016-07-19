@@ -52,7 +52,7 @@ NeuralNet *nn_Cstring2NeuralNet(char* st){
 
 	weights = nn_parse_ReadWeight(&st,n_weights);
 
-    nn = nn_NeuralNetCreate(n_layers,function_activation,bhLambda,bhT1,bhT2,neurons,input_min,input_max,output_min,output_max,steepness,bias,weights);
+  nn = nn_NeuralNetCreate(n_layers,function_activation,bhLambda,bhT1,bhT2,neurons,input_min,input_max,output_min,output_max,steepness,bias,weights);
 
 	return nn;
 }

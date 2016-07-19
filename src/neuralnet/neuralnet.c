@@ -34,7 +34,7 @@ NeuralNet* nn_NeuralNetCreate(unsigned short n_layers,unsigned short function_ac
 
 	nn->size = size_byte_nn;
 
-	//SET_VARSIZE(nn , size_byte_nn);
+	SET_VARSIZE(nn , size_byte_nn);
 
 	nn->NLayers = n_layers;
 	nn->FunctionActivation = function_activation;
